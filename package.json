@@ -1,0 +1,39 @@
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "cross-env PORT=3001 next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "axios": "^1.9.0",
+    "cross-env": "^7.0.3",
+    "firebase": "^11.8.1",
+    "framer-motion": "^12.23.6",
+    "jodit-react": "^5.2.19",
+    "lucide-react": "^0.511.0",
+    "next": "15.3.2",
+    "nextjs-toploader": "^3.8.16",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-fast-marquee": "^1.6.5",
+    "react-feather": "^2.0.10",
+    "react-hot-toast": "^2.5.2",
+    "react-icons": "^5.5.0",
+    "react-toastify": "^11.0.5",
+    "recharts": "^3.1.0",
+    "tailwind-scrollbar-hide": "^2.0.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.2",
+    "tailwindcss": "^4"
+  }
+}
