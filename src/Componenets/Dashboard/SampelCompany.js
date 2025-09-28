@@ -23,7 +23,7 @@ export default function SampelCompany() {
   const [formData, setFormData] = useState({
     companyName: '',
     employees: '',
-    industries: '',
+    industryTags: '',
     website: '',
     linkedinUrl: '',
     facebookUrl: '',
@@ -71,9 +71,9 @@ export default function SampelCompany() {
       const filtered = data.filter((company) =>
         company.companyName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         company.companyCountry?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        company.industries?.some(industry => 
+        (Array.isArray(company.industryTags) && company.industryTags.some(industry => 
           industry.toLowerCase().includes(searchTerm.toLowerCase())
-        )
+        ))
       );
       setFilteredData(filtered);
     }
@@ -134,7 +134,7 @@ export default function SampelCompany() {
     setFormData({
       companyName: company.companyName || "",
       employees: company.employees?.toString() || "",
-      industries: Array.isArray(company.industries) ? company.industries.join(', ') : company.industries || "",
+      industryTags: Array.isArray(company.industryTags) ? company.industryTags.join(', ') : company.industryTags || "",
       website: company.website || "",
       linkedinUrl: company.linkedinUrl || "",
       facebookUrl: company.facebookUrl || "",
@@ -183,7 +183,7 @@ export default function SampelCompany() {
       // Add all form fields to FormData with correct schema field names
       formDataToSend.append("companyName", formData.companyName);
       formDataToSend.append("employees", formData.employees);
-      formDataToSend.append("industries", formData.industries);
+      formDataToSend.append("industryTags", formData.industryTags);
       formDataToSend.append("website", formData.website);
       formDataToSend.append("linkedinUrl", formData.linkedinUrl);
       formDataToSend.append("facebookUrl", formData.facebookUrl);
@@ -211,7 +211,7 @@ export default function SampelCompany() {
           ? {
               ...company,
               ...formData,
-              industries: formData.industries.split(',').map(ind => ind.trim()),
+              industryTags: formData.industryTags.split(',').map(ind => ind.trim()),
               employees: formData.employees ? parseInt(formData.employees) : company.employees,
               foundedYear: formData.foundedYear ? parseInt(formData.foundedYear) : company.foundedYear,
               image: response.company?.image || response.image || company.image,
@@ -242,7 +242,7 @@ export default function SampelCompany() {
     setFormData({
       companyName: '',
       employees: '',
-      industries: '',
+      industryTags: '',
       website: '',
       linkedinUrl: '',
       facebookUrl: '',
@@ -385,22 +385,22 @@ export default function SampelCompany() {
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {Array.isArray(company.industries) ? (
+                    {Array.isArray(company.industryTags) ? (
                       <div className="flex flex-wrap gap-1">
-                        {company.industries.slice(0, 2).map((industry, idx) => (
+                        {company.industryTags.slice(0, 2).map((industry, idx) => (
                           <span key={idx} className="px-2 py-1 text-xs bg-purple-100 text-purple-800 rounded-full">
                             {industry}
                           </span>
                         ))}
-                        {company.industries.length > 2 && (
+                        {company.industryTags.length > 2 && (
                           <span className="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-full">
-                            +{company.industries.length - 2}
+                            +{company.industryTags.length - 2}
                           </span>
                         )}
                       </div>
                     ) : (
                       <span className="px-2 py-1 text-xs bg-purple-100 text-purple-800 rounded-full">
-                        {company.industries || 'Not specified'}
+                        {company.industryTags || 'Not specified'}
                       </span>
                     )}
                   </td>
@@ -537,8 +537,8 @@ export default function SampelCompany() {
                     </label>
                     <input
                       type="text"
-                      name="industries"
-                      value={formData.industries}
+                      name="industryTags"
+                      value={formData.industryTags}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e9e9a] focus:border-[#1e9e9a] transition-colors"
                       placeholder="Technology, Software, AI (separate with commas)"

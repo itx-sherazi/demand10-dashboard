@@ -9,7 +9,6 @@ import {
   removeBadgeFromCompany,
   getCompanyBadges,
   getAllCompanies,
-  getBadgeReferralStats,
   updateCompanyBadgeHomepage // Add this import
 } from "@/services/api";
 import { 
@@ -56,12 +55,7 @@ export default function Badges() {
     loadCompanies();
   }, []);
 
-  // Load referral stats when the referrals tab is selected
-  useEffect(() => {
-    if (activeTab === "referrals") {
-      loadReferralStats();
-    }
-  }, [activeTab]);
+
 
   const loadBadges = async () => {
     setLoading(true);
@@ -115,21 +109,7 @@ export default function Badges() {
     }
   };
 
-  const loadReferralStats = async () => {
-    setLoading(true);
-    try {
-      const response = await getBadgeReferralStats({ limit: 20 });
-      if (response.status === 200) {
-        setReferralStats(response.data.data);
-      } else {
-        setError(response.data.message || "Failed to load referral stats");
-      }
-    } catch (err) {
-      setError("Failed to load referral stats");
-    } finally {
-      setLoading(false);
-    }
-  };
+ 
 
   const searchCompanies = async (searchTerm) => {
     if (!searchTerm) {
@@ -448,7 +428,7 @@ export default function Badges() {
     
     // If it's a relative path, prepend the base URL
     // Images are served directly from the backend static file server
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL?.replace('/api/v1', '') || 'https://api.intentwire.com';
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL?.replace('/api/v1', '') || 'https://api.demand10.com';
     return `${baseUrl}${imagePath}`;
   };
 
@@ -517,18 +497,7 @@ export default function Badges() {
             <FaPlus className="inline mr-2" />
             Assign Badges
           </button>
-          
-          <button
-            onClick={() => setActiveTab("referrals")}
-            className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${
-              activeTab === "referrals"
-                ? "border-[#40c0b8] text-[#40c0b8]"
-                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-            }`}
-          >
-            <FaChartBar className="inline mr-2" />
-            Referral Stats
-          </button>
+         
         </nav>
       </div>
 
@@ -934,85 +903,6 @@ export default function Badges() {
         </div>
       )}
 
-      {activeTab === "referrals" && (
-        <div className="bg-white shadow rounded-lg p-6">
-          <h2 className="text-xl font-bold text-gray-900 mb-6">Badge Referral Statistics</h2>
-          
-          {loading ? (
-            <div className="flex justify-center items-center h-64">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#40c0b8]"></div>
-            </div>
-          ) : referralStats.length === 0 ? (
-            <div className="text-center py-12">
-              <FaChartBar className="mx-auto h-12 w-12 text-gray-400" />
-              <h3 className="mt-2 text-sm font-medium text-gray-900">No referral data</h3>
-              <p className="mt-1 text-sm text-gray-500">
-                Badge referrals will appear here once users start embedding badges on their websites.
-              </p>
-              <div className="mt-6">
-                <h4 className="text-md font-medium text-gray-900 mb-2">How to get referral data:</h4>
-                <ul className="list-disc list-inside text-sm text-gray-500 space-y-1">
-                  <li>Embed badges on external websites (not intentwire.com)</li>
-                  <li>Visitors to those websites will trigger referral tracking</li>
-                  <li>Clicks on badges will drive traffic back to company profiles</li>
-                  <li>Referral data will appear here within a few minutes</li>
-                </ul>
-              </div>
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Source Website
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Company
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Referrals
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Last Referral
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {referralStats.map((stat) => (
-                    <tr key={`${stat.companyId}-${stat.sourceWebsite}`}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {stat.sourceWebsite}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {stat.companyName || `Company ID: ${stat.companyId}`}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                          {stat.referralCount}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {new Date(stat.lastReferralAt).toLocaleDateString()}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-          
-          <div className="mt-6 p-4 bg-blue-50 rounded-md">
-            <h3 className="text-md font-medium text-blue-900 mb-2">How to track referrals:</h3>
-            <ul className="list-disc list-inside text-sm text-blue-800 space-y-1">
-              <li>When users embed badges on their websites, referral tracking is automatic</li>
-              <li>Each click from an embedded badge is tracked with the source website information</li>
-              <li>Referral data helps you understand which websites are driving traffic to company profiles</li>
-              <li>Use this data to identify valuable partnerships and content distribution channels</li>
-            </ul>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

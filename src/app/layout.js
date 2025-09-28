@@ -1,15 +1,10 @@
-// 👇 Add this line at the top of the file
 export const dynamic = 'force-dynamic';
 
 import "./globals.css";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from 'react-hot-toast';
-import { validateEnvVariables } from '../utils/envValidator';
 
-// Validate environment variables on server start
-if (typeof window === 'undefined') {
-  validateEnvVariables();
-}
+
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });

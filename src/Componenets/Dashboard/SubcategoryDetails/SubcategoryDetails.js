@@ -258,7 +258,6 @@ const SubcategoryDetails = () => {
 
       if (response.status === 200) {
         toast.success("Subcategory details updated successfully");
-        // Refresh the data to show the new Cloudinary URLs
         fetchSubcategoryDetails(subcategory.slug);
       } else {
         throw new Error(response.data?.message || "Failed to update subcategory details");

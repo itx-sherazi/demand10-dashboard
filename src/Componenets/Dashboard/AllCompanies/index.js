@@ -1,24 +1,49 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { getAllCompanies, updateCompanyWithTeamLeads, deleteCompanyWithTeamLeads } from '@/services/api';
-import { Search, Edit, Trash2, Users, Building, Globe, Calendar, MapPin, Plus, X, Save } from 'lucide-react';
+import { getAllCompanies, updateCompanyWithTeamLeads, deleteCompanyWithTeamLeads, updateCompanySponsorship } from '@/services/api';
+import { Search, Edit, Trash2, Users, Building, Globe, Calendar, MapPin, Plus, X, Save, Map, List, Star } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 
 // Company Card Component
-const CompanyCard = ({ company, onEdit, onDelete }) => {
+const CompanyCard = ({ company, onEdit, onDelete, onToggleSponsor, viewMode = "list" }) => {
+  // Function to get the full image URL
+  const getImageUrl = (imagePath) => {
+    // If it's already a full URL, return as is
+    if (!imagePath) return null;
+    if (imagePath.startsWith('http')) return imagePath;
+    
+    // If it's a relative path, prepend the API base URL
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
+    // Remove /api/v1 prefix if it exists in the imagePath since uploads are served directly
+    const cleanPath = imagePath.startsWith('/api/v1') ? imagePath.substring(7) : imagePath;
+    // For uploads, we need to remove the /api/v1 part from the base URL
+    const uploadBaseUrl = baseUrl.replace('/api/v1', '');
+    return `${uploadBaseUrl}${cleanPath}`;
+  };
+
+  const imageUrl = getImageUrl(company.image);
+
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
       {/* Company Image/Logo Header */}
       <div className="relative h-32 bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
-        {company.image ? (
+        {imageUrl ? (
           <img
-            src={company.image} 
+            src={imageUrl} 
             alt={company.companyName} 
             className="w-16 h-16 rounded-full object-cover border-4 border-white shadow-lg" 
           />
         ) : (
           <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center border-4 border-gray-200 shadow-lg">
             <Building className="w-8 h-8 text-gray-500" />
+          </div>
+        )}
+        
+        {/* Sponsor Badge */}
+        {company.sponsor && (
+          <div className="absolute top-3 left-3 bg-yellow-400 text-yellow-900 px-2 py-1 rounded-full text-xs font-bold flex items-center">
+            <Star className="w-3 h-3 mr-1" />
+            SPONSOR
           </div>
         )}
         
@@ -92,29 +117,44 @@ const CompanyCard = ({ company, onEdit, onDelete }) => {
         </div>
 
         {/* Industries Tags */}
-        {company.industries && company.industries.length > 0 && (
+        {company.industryTags && company.industryTags.length > 0 && (
           <div className="mb-4">
             <div className="flex flex-wrap gap-2">
-              {company.industries.slice(0, 3).map((industry, index) => (
+              {company.industryTags.slice(0, 3).map((industry, index) => (
                 <span 
                   key={index} 
                   className="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full border border-blue-200"
                 >
-                  {industry}
+                  {typeof industry === 'object' && industry !== null ? industry.industryName : industry}
                 </span>
               ))}
-              {company.industries.length > 3 && (
+              {company.industryTags.length > 3 && (
                 <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
-                  +{company.industries.length - 3} more
+                  +{company.industryTags.length - 3} more
                 </span>
               )}
             </div>
           </div>
         )}
 
+        {/* Sponsor Toggle Button */}
+        <div className="pt-4 border-t border-gray-100">
+          <button
+            onClick={() => onToggleSponsor(company._id, !company.sponsor)}
+            className={`w-full py-2 px-4 rounded-lg font-medium transition-colors flex items-center justify-center ${
+              company.sponsor
+                ? "bg-yellow-100 text-yellow-800 hover:bg-yellow-200"
+                : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+            }`}
+          >
+            <Star className={`w-4 h-4 mr-2 ${company.sponsor ? "fill-current" : ""}`} />
+            {company.sponsor ? "Sponsored" : "Make Sponsor"}
+          </button>
+        </div>
+
         {/* Team Leads Section */}
         {company.teamLeads && company.teamLeads.length > 0 && (
-          <div className="pt-4 border-t border-gray-100">
+          <div className="pt-4 border-t border-gray-100 mt-4">
             <div className="flex items-center mb-3">
               <Users className="w-4 h-4 mr-2 text-indigo-500" />
               <p className="text-sm font-semibold text-gray-700">
@@ -150,6 +190,29 @@ const CompanyCard = ({ company, onEdit, onDelete }) => {
   );
 };
 
+// Map View Component
+const MapView = ({ companies, onEdit, onDelete, onToggleSponsor }) => {
+  // For now, we'll create a simple grid view that looks like a map
+  // In a real implementation, you would integrate with a mapping library like Google Maps
+  return (
+    <div className="bg-white rounded-xl shadow-sm p-6">
+      <h2 className="text-xl font-bold text-gray-900 mb-6">Companies Map View</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {companies.map((company) => (
+          <CompanyCard
+            key={company._id}
+            company={company}
+            onEdit={onEdit}
+            onDelete={onDelete}
+            onToggleSponsor={onToggleSponsor}
+            viewMode="map"
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 // Search Bar Component
 const SearchBar = ({ searchQuery, onSearch, resultsCount }) => {
   return (
@@ -166,7 +229,7 @@ const SearchBar = ({ searchQuery, onSearch, resultsCount }) => {
       </div>
       {searchQuery && (
         <p className="mt-2 text-sm text-gray-600">
-          {resultsCount || 0} companies found for &quot;<span className="font-medium">{searchQuery}</span>&quot;
+          {resultsCount || 0} companies found for "<span className="font-medium">{searchQuery}</span>"
         </p>
       )}
     </div>
@@ -318,6 +381,7 @@ export default function AllCompaniesTeamData() {
   const [formData, setFormData] = useState({});
   const [teamLeads, setTeamLeads] = useState([]);
   const [newImage, setNewImage] = useState(null);
+  const [viewMode, setViewMode] = useState('list'); // 'list' or 'map'
 
   // API Functions
   const loadCompanies = async (page = 1, search = '') => {
@@ -359,7 +423,11 @@ export default function AllCompaniesTeamData() {
       twitterUrl: company.twitterUrl || '',
       companyCountry: company.companyCountry || '',
       foundedYear: company.foundedYear || '',
-      industries: Array.isArray(company.industries) ? company.industries.join(', ') : ''
+      industryTags: Array.isArray(company.industryTags) 
+        ? company.industryTags.map(industry => 
+            typeof industry === 'object' && industry !== null ? industry.industryName : industry
+          ).join(', ') 
+        : ''
     });
     setTeamLeads(company.teamLeads || []);
     setNewImage(null);
@@ -404,7 +472,7 @@ export default function AllCompaniesTeamData() {
     
     Object.keys(formData).forEach(key => {
       if (formData[key]) {
-        if (key === 'industries') {
+        if (key === 'industryTags') {
           updateFormData.append(key, JSON.stringify(formData[key].split(',').map(i => i.trim())));
         } else {
           updateFormData.append(key, formData[key]);
@@ -442,6 +510,28 @@ export default function AllCompaniesTeamData() {
     }
   };
 
+  const handleToggleSponsor = async (companyId, sponsor) => {
+    try {
+      const response = await updateCompanySponsorship(companyId, sponsor);
+      if (response.status === 200) {
+        toast.success(`Company ${sponsor ? 'sponsored' : 'unsponsored'} successfully!`);
+        // Update the company in the state
+        setCompanies(prevCompanies => 
+          prevCompanies.map(company => 
+            company._id === companyId 
+              ? { ...company, sponsor } 
+              : company
+          )
+        );
+      } else {
+        toast.error('Failed to update company sponsorship');
+      }
+    } catch (error) {
+      toast.error('Failed to update company sponsorship');
+      console.error('Sponsorship error:', error);
+    }
+  };
+
   // Initial Load
   useEffect(() => {
     loadCompanies();
@@ -456,28 +546,67 @@ export default function AllCompaniesTeamData() {
           <p className="text-gray-600">Manage all companies and their team members</p>
         </div>
 
-        {/* Search */}
-        <SearchBar 
-          searchQuery={searchQuery}
-          onSearch={handleSearch}
-          resultsCount={pagination.totalCompanies}
-        />
+        {/* View Toggle and Search */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <div className="flex space-x-2">
+            <button
+              onClick={() => setViewMode('list')}
+              className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
+                viewMode === 'list'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
+              }`}
+            >
+              <List className="w-4 h-4 mr-2" />
+              List View
+            </button>
+            <button
+              onClick={() => setViewMode('map')}
+              className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
+                viewMode === 'map'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
+              }`}
+            >
+              <Map className="w-4 h-4 mr-2" />
+              Map View
+            </button>
+          </div>
+          
+          <SearchBar 
+            searchQuery={searchQuery}
+            onSearch={handleSearch}
+            resultsCount={pagination.totalCompanies}
+          />
+        </div>
 
         {/* Loading State */}
         {loading && <LoadingSpinner />}
 
-        {/* Companies Grid */}
+        {/* Companies Views */}
         {!loading && companies.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
-            {companies.map((company) => (
-              <CompanyCard
-                key={company._id}
-                company={company}
+          <>
+            {viewMode === 'list' ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+                {companies.map((company) => (
+                  <CompanyCard
+                    key={company._id}
+                    company={company}
+                    onEdit={openEditModal}
+                    onDelete={handleDeleteCompany}
+                    onToggleSponsor={handleToggleSponsor}
+                  />
+                ))}
+              </div>
+            ) : (
+              <MapView 
+                companies={companies} 
                 onEdit={openEditModal}
                 onDelete={handleDeleteCompany}
+                onToggleSponsor={handleToggleSponsor}
               />
-            ))}
-          </div>
+            )}
+          </>
         )}
 
         {/* Empty State */}
@@ -576,8 +705,8 @@ export default function AllCompaniesTeamData() {
                       <label className="block text-sm font-medium text-gray-700 mb-2">Industries</label>
                       <input
                         type="text"
-                        name="industries"
-                        value={formData.industries}
+                        name="industryTags"
+                        value={formData.industryTags}
                         onChange={handleInputChange}
                         placeholder="IT Services, Cybersecurity, Cloud Computing"
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
@@ -596,7 +725,7 @@ export default function AllCompaniesTeamData() {
                       {editingCompany?.image && (
                         <div className="mt-3">
                           <p className="text-sm text-gray-600 mb-2">Current logo:</p>
-                          <img src={editingCompany.image} alt="Current logo" className="w-20 h-20 object-cover rounded-lg border" />
+                          <img src={getImageUrl(editingCompany.image)} alt="Current logo" className="w-20 h-20 object-cover rounded-lg border" />
                         </div>
                       )}
                     </div>
@@ -684,7 +813,7 @@ export default function AllCompaniesTeamData() {
                       <div className="text-center py-8 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
                         <Users className="w-12 h-12 text-gray-400 mx-auto mb-3" />
                         <p className="text-gray-500">No team leads added yet</p>
-                        <p className="text-sm text-gray-400">Click &quot;Add Team Lead&quot; to get started</p>
+                        <p className="text-sm text-gray-400">Click "Add Team Lead" to get started</p>
                       </div>
                     )}
                   </div>

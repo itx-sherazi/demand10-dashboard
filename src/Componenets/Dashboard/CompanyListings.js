@@ -16,6 +16,21 @@ export default function CompanyListings() {
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // Function to get the full image URL
+  const getImageUrl = (imagePath) => {
+    // If it's already a full URL, return as is
+    if (!imagePath) return null;
+    if (imagePath.startsWith('http')) return imagePath;
+    
+    // If it's a relative path, prepend the API base URL
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
+    // Remove /api/v1 prefix if it exists in the imagePath since uploads are served directly
+    const cleanPath = imagePath.startsWith('/api/v1') ? imagePath.substring(7) : imagePath;
+    // For uploads, we need to remove the /api/v1 part from the base URL
+    const uploadBaseUrl = baseUrl.replace('/api/v1', '');
+    return `${uploadBaseUrl}${cleanPath}`;
+  };
+
   useEffect(() => {
     fetchRequests();
   }, []);
@@ -307,7 +322,7 @@ export default function CompanyListings() {
                   <div className="md:col-span-2">
                     <h4 className="text-lg font-semibold text-gray-700 mb-3">Company Image</h4>
                     <img 
-                      src={selectedRequest.image} 
+                      src={getImageUrl(selectedRequest.image)} 
                       alt={selectedRequest.companyName} 
                       className="max-w-full h-auto rounded-lg"
                     />

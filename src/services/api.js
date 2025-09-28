@@ -1703,33 +1703,3 @@ export const getAllCompanyBadges = async (filters = {}) => {
   }
 };
 
-// 🆕 Get badge referral statistics
-export const getBadgeReferralStats = async (filters = {}) => {
-  try {
-    const params = new URLSearchParams(filters);
-    const response = await fetch(`${API_BASE_URL}/badges/referral-stats?${params}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include"
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.message || "Failed to fetch badge referral stats");
-    }
-
-    return {
-      status: response.status,
-      data,
-    };
-  } catch (error) {
-    console.error("Error in getBadgeReferralStats():", error);
-    return {
-      status: 500,
-      data: { message: "Something went wrong", error: error.message },
-    };
-  }
-};
