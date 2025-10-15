@@ -24,7 +24,7 @@ export default function EmptyState({ isSearchResult = false, searchTerm = "", se
       {isSearchResult && (
         <button
           onClick={() => setSearchTerm("")}
-          className="inline-flex items-center px-4 py-2 bg-[#1e9e9a] text-white rounded-lg transition-colors"
+          className="inline-flex items-center px-4 py-2 bg-[#1e477f] text-white rounded-lg transition-colors"
         >
           Clear search
         </button>

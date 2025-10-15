@@ -203,7 +203,7 @@ export default function DatasetRequests() {
           </p>
           <button
             onClick={() => window.location.reload()}
-            className="mt-4 px-4 py-2 bg-[#1e9e9a] text-white rounded-lg hover:bg-[#1e9e9a] transition-colors"
+            className="mt-4 px-4 py-2 bg-[#1e477f] text-white rounded-lg hover:bg-[#1e477f] transition-colors"
           >
             Refresh Data
           </button>
@@ -219,7 +219,7 @@ export default function DatasetRequests() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-              <Users className="h-6 w-6 text-[#1e9e9a]" />
+              <Users className="h-6 w-6 text-[#1e477f]" />
               Dataset Requests
             </h1>
             <p className="text-gray-600 mt-1">Manage and view all dataset requests</p>
@@ -230,7 +230,7 @@ export default function DatasetRequests() {
             <input
               type="text"
               placeholder="Search by name..."
-              className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e9e9a] focus:border-transparent outline-none"
+              className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e477f] focus:border-transparent outline-none"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -244,10 +244,10 @@ export default function DatasetRequests() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
           <div className="bg-blue-50 rounded-lg p-4">
             <div className="flex items-center">
-              <Users className="h-8 w-8 text-[#1e9e9a]" />
+              <Users className="h-8 w-8 text-[#1e477f]" />
               <div className="ml-3">
-                <p className="text-sm font-medium text-[#1e9e9a]">Total Requests</p>
-                <p className="text-2xl font-bold text-[#1e9e9a]">{filteredData.length}</p>
+                <p className="text-sm font-medium text-[#1e477f]">Total Requests</p>
+                <p className="text-2xl font-bold text-[#1e477f]">{filteredData.length}</p>
               </div>
             </div>
           </div>
@@ -292,7 +292,7 @@ export default function DatasetRequests() {
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-10 w-10">
                           <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
-                            <span className="text-sm font-medium text-[#1e9e9a]">
+                            <span className="text-sm font-medium text-[#1e477f]">
                               {request.fullName.charAt(0).toUpperCase()}
                             </span>
                           </div>
@@ -368,7 +368,7 @@ export default function DatasetRequests() {
                       </p>
                       <button
                         onClick={() => setSearchTerm("")}
-                        className="px-4 py-2 bg-[#1e9e9a] text-white rounded-lg hover:bg-[#1e9e9a] transition-colors"
+                        className="px-4 py-2 bg-[#1e477f] text-white rounded-lg hover:bg-[#1e477f] transition-colors"
                       >
                         Clear search
                       </button>
@@ -390,7 +390,7 @@ export default function DatasetRequests() {
               {searchTerm && (
                 <button
                   onClick={() => setSearchTerm("")}
-                  className="text-sm text-[#1e9e9a]"
+                  className="text-sm text-[#1e477f]"
                 >
                   Clear search
                 </button>

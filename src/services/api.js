@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/v1`;
+
 
 export const getUsers = async () => {
   const response = await fetch(`${API_BASE_URL}/users`, {

@@ -194,8 +194,8 @@ function SidebarButton({ icon, label, isActive, onClick, sidebarOpen }) {
     <button
       className={`flex items-center p-3 rounded-lg transition-colors duration-200 ${
         isActive
-          ? "bg-[#1e9e9a] text-white font-semibold"
-          : "hover:bg-[#98ddda] text-black"
+          ? "bg-[#1d4882] text-white font-semibold"
+          : "hover:bg-[#798fab] text-black"
       }`}
       onClick={onClick}
     >

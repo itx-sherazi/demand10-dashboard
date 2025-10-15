@@ -271,7 +271,7 @@ export default function SampelCompany() {
       {isSearchResult && (
         <button
           onClick={() => setSearchTerm("")}
-          className="inline-flex items-center px-4 py-2 bg-[#1e9e9a] text-white rounded-lg  transition-colors"
+          className="inline-flex items-center px-4 py-2 bg-[#1e477f] text-white rounded-lg  transition-colors"
         >
           Clear search
         </button>
@@ -297,7 +297,7 @@ export default function SampelCompany() {
               placeholder="Search companies by name, country, or industry..."
               value={searchTerm}
               onChange={handleSearchChange}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e9e9a] focus:border-[#1e9e9a]"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e477f] focus:border-[#1e477f]"
             />
           </div>
           {searchTerm && (
@@ -407,7 +407,7 @@ export default function SampelCompany() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <button
                       onClick={() => handleEditClick(company)}
-                      className="text-[#1e9e9a] mr-3"
+                      className="text-[#1e477f] mr-3"
                       title={`Edit ${company.companyName}`}
                     >
                       <Edit size={18} />
@@ -432,11 +432,11 @@ export default function SampelCompany() {
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl shadow-2xl w-full max-w-6xl max-h-[95vh] overflow-y-auto">
             {/* Modal Header */}
-            <div className="bg-[#1e9e9a] text-white px-8 py-4 rounded-t-xl flex justify-between items-center sticky top-0 z-10">
+            <div className="bg-[#1e477f] text-white px-8 py-4 rounded-t-xl flex justify-between items-center sticky top-0 z-10">
               <h2 className="text-2xl font-bold">Edit Company Details</h2>
               <button
                 onClick={handleCloseModal}
-                className="text-white hover:text-blue-200 focus:outline-none p-1 rounded-full hover:bg-[#1e9e9a] transition-colors"
+                className="text-white hover:text-blue-200 focus:outline-none p-1 rounded-full hover:bg-[#1e477f] transition-colors"
               >
                 <X size={24} />
               </button>
@@ -449,7 +449,7 @@ export default function SampelCompany() {
                   {/* Company Name */}
                   <div className="lg:col-span-2">
                     <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center">
-                      <Building2 size={16} className="mr-1 text-[#1e9e9a]" />
+                      <Building2 size={16} className="mr-1 text-[#1e477f]" />
                       Company Name *
                     </label>
                     <input
@@ -457,7 +457,7 @@ export default function SampelCompany() {
                       name="companyName"
                       value={formData.companyName}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e9e9a] focus:border-[#1e9e9a] transition-colors"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e477f] focus:border-[#1e477f] transition-colors"
                       required
                       placeholder="Enter company name"
                     />
@@ -466,7 +466,7 @@ export default function SampelCompany() {
                   {/* Employees */}
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center">
-                      <Users size={16} className="mr-1 text-[#1e9e9a]" />
+                      <Users size={16} className="mr-1 text-[#1e477f]" />
                       Number of Employees
                     </label>
                     <input
@@ -474,7 +474,7 @@ export default function SampelCompany() {
                       name="employees"
                       value={formData.employees}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e9e9a] focus:border-[#1e9e9a] transition-colors"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e477f] focus:border-[#1e477f] transition-colors"
                       placeholder="e.g., 50-100, 1000+"
                     />
                   </div>
@@ -482,7 +482,7 @@ export default function SampelCompany() {
                   {/* Founded Year */}
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center">
-                      <Calendar size={16} className="mr-1 text-[#1e9e9a]" />
+                      <Calendar size={16} className="mr-1 text-[#1e477f]" />
                       Founded Year
                     </label>
                     <input
@@ -492,7 +492,7 @@ export default function SampelCompany() {
                       onChange={handleInputChange}
                       min="1800"
                       max={new Date().getFullYear()}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e9e9a] focus:border-[#1e9e9a] transition-colors"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e477f] focus:border-[#1e477f] transition-colors"
                       placeholder="e.g., 2010"
                     />
                   </div>
@@ -500,7 +500,7 @@ export default function SampelCompany() {
                   {/* Company Country */}
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center">
-                      <MapPin size={16} className="mr-1 text-[#1e9e9a]" />
+                      <MapPin size={16} className="mr-1 text-[#1e477f]" />
                       Company Country
                     </label>
                     <input
@@ -508,7 +508,7 @@ export default function SampelCompany() {
                       name="companyCountry"
                       value={formData.companyCountry}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e9e9a] focus:border-[#1e9e9a] transition-colors"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e477f] focus:border-[#1e477f] transition-colors"
                       placeholder="e.g., United States"
                     />
                   </div>
@@ -516,7 +516,7 @@ export default function SampelCompany() {
                   {/* Website */}
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center">
-                      <Globe size={16} className="mr-1 text-[#1e9e9a]" />
+                      <Globe size={16} className="mr-1 text-[#1e477f]" />
                       Website
                     </label>
                     <input
@@ -524,7 +524,7 @@ export default function SampelCompany() {
                       name="website"
                       value={formData.website}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e9e9a] focus:border-[#1e9e9a] transition-colors"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e477f] focus:border-[#1e477f] transition-colors"
                       placeholder="https://example.com"
                     />
                   </div>
@@ -532,7 +532,7 @@ export default function SampelCompany() {
                   {/* Industries */}
                   <div className="lg:col-span-2">
                     <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center">
-                      <Factory size={16} className="mr-1 text-[#1e9e9a]" />
+                      <Factory size={16} className="mr-1 text-[#1e477f]" />
                       Industries
                     </label>
                     <input
@@ -540,7 +540,7 @@ export default function SampelCompany() {
                       name="industryTags"
                       value={formData.industryTags}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e9e9a] focus:border-[#1e9e9a] transition-colors"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e477f] focus:border-[#1e477f] transition-colors"
                       placeholder="Technology, Software, AI (separate with commas)"
                     />
                     <p className="text-sm text-gray-500 mt-1">
@@ -558,7 +558,7 @@ export default function SampelCompany() {
                       name="linkedinUrl"
                       value={formData.linkedinUrl}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e9e9a] focus:border-[#1e9e9a] transition-colors"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e477f] focus:border-[#1e477f] transition-colors"
                       placeholder="https://linkedin.com/company/..."
                     />
                   </div>
@@ -573,7 +573,7 @@ export default function SampelCompany() {
                       name="facebookUrl"
                       value={formData.facebookUrl}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e9e9a] focus:border-[#1e9e9a] transition-colors"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e477f] focus:border-[#1e477f] transition-colors"
                       placeholder="https://facebook.com/..."
                     />
                   </div>
@@ -588,7 +588,7 @@ export default function SampelCompany() {
                       name="twitterUrl"
                       value={formData.twitterUrl}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e9e9a] focus:border-[#1e9e9a] transition-colors"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e477f] focus:border-[#1e477f] transition-colors"
                       placeholder="https://twitter.com/..."
                     />
                   </div>
@@ -603,7 +603,7 @@ export default function SampelCompany() {
                       value={formData.description}
                       onChange={handleInputChange}
                       rows="4"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e9e9a] focus:border-[#1e9e9a] transition-colors resize-vertical"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e477f] focus:border-[#1e477f] transition-colors resize-vertical"
                       placeholder="Enter detailed company description..."
                     />
                   </div>
@@ -630,7 +630,7 @@ export default function SampelCompany() {
                         name="image"
                         accept="image/*"
                         onChange={handleImageChange}
-                        className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e9e9a] focus:border-[#1e9e9a] transition-colors"
+                        className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e477f] focus:border-[#1e477f] transition-colors"
                       />
                     </div>
                   </div>
@@ -641,13 +641,13 @@ export default function SampelCompany() {
                       <button
                         type="button"
                         onClick={handleCloseModal}
-                        className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#1e9e9a] transition-colors"
+                        className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#1e477f] transition-colors"
                       >
                         Cancel
                       </button>
                       <button
                         type="submit"
-                        className="px-8 py-3 bg-[#1e9e9a] text-white rounded-lg hover:from-[#1e9e9a] hover:to-[#1e9e9a] focus:outline-none focus:ring-2 focus:ring-[#1e9e9a] focus:ring-offset-2 flex items-center font-semibold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
+                        className="px-8 py-3 bg-[#1e477f] text-white rounded-lg hover:from-[#1e477f] hover:to-[#1e477f] focus:outline-none focus:ring-2 focus:ring-[#1e477f] focus:ring-offset-2 flex items-center font-semibold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
                         disabled={isSubmitting}
                       >
                         {isSubmitting ? (

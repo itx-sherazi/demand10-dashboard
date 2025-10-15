@@ -125,7 +125,7 @@ export default function Blog() {
             placeholder="Search blogs by title, category, or tags..."
             value={searchTerm}
             onChange={handleSearchChange}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e9e9a] focus:border-[#1e9e9a]"
+            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e477f] focus:border-[#1e477f]"
           />
         </div>
         {searchTerm && (
@@ -219,7 +219,7 @@ export default function Blog() {
                       <div className="flex flex-wrap gap-1">
                         {blog.keywords && blog.keywords.length > 0 ? (
                           blog.keywords.slice(0, 3).map((keyword, idx) => (
-                            <span key={idx} className="text-xs bg-[#40c0b8] text-white px-2 py-1 rounded">
+                            <span key={idx} className="text-xs bg-[#1e477f] text-white px-2 py-1 rounded">
                               {keyword}
                             </span>
                           ))

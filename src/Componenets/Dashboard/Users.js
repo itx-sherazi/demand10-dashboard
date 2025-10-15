@@ -70,7 +70,7 @@ const Users = () => {
             </div>
             <button
               onClick={loadUsers}
-              className="bg-[#1e9e9a]  text-white px-6 py-2 rounded-lg font-semibold transition-colors duration-200"
+              className="bg-[#1e477f]  text-white px-6 py-2 rounded-lg font-semibold transition-colors duration-200"
             >
               Refresh Users
             </button>
@@ -94,7 +94,7 @@ const Users = () => {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     {/* User Avatar */}
-                    <div className="w-16 h-16 bg-[#78dbd3] rounded-full flex items-center justify-center mb-4">
+                    <div className="w-16 h-16 bg-[#1e477f] rounded-full flex items-center justify-center mb-4">
                       <span className="text-white text-xl font-bold">
                         {user.name ? user.name.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase()}
                       </span>
@@ -124,7 +124,7 @@ const Users = () => {
                     className={`ml-4 px-4 py-2 rounded-lg font-semibold transition-all duration-200 ${
                       deleteLoading === (user._id || user.id)
                         ? 'bg-gray-400 cursor-not-allowed'
-                        : 'bg-[#1e9e9a] text-white'
+                        : 'bg-[#1e477f] text-white'
                     }`}
                   >
                     {deleteLoading === (user._id || user.id) ? (

@@ -95,8 +95,8 @@ const Addblogs = () => {
           disabled={loading}
           className={`${
             loading
-              ? "bg-[#1e9e9a] cursor-not-allowed opacity-70"
-              : "bg-[#1e9e9a] hover:bg-[#17807d] cursor-pointer"
+              ? "bg-[#1d4882] cursor-not-allowed opacity-70"
+              : "bg-[#1d4882]  cursor-pointer"
           } text-white px-6 py-3 rounded-lg text-lg font-semibold flex items-center gap-2 justify-center transition-all duration-200 shadow-lg`}
         >
           {loading ? (
@@ -137,7 +137,7 @@ const Addblogs = () => {
           <input
             type="text"
             placeholder="Enter an engaging title for your blog..."
-            className="w-full p-4 border-2 border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-[#1e9e9a] focus:border-[#1e9e9a] transition-all duration-200"
+            className="w-full p-4 border-2 border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-[#1e477f] focus:border-[#1e477f] transition-all duration-200"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
@@ -151,7 +151,7 @@ const Addblogs = () => {
           </label>
           <textarea
             placeholder="Write a compelling description that summarizes your blog..."
-            className="w-full p-4 border-2 border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-[#1e9e9a] focus:border-[#1e9e9a] transition-all duration-200 resize-vertical"
+            className="w-full p-4 border-2 border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-[#1e477f] focus:border-[#1e477f] transition-all duration-200 resize-vertical"
             rows={4}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -167,7 +167,7 @@ const Addblogs = () => {
           <input
             type="text"
             placeholder="SEO meta title (60 characters max)..."
-            className="w-full p-4 border-2 border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-[#1e9e9a] focus:border-[#1e9e9a] transition-all duration-200"
+            className="w-full p-4 border-2 border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-[#1e477f] focus:border-[#1e477f] transition-all duration-200"
             value={metaTitle}
             onChange={(e) => setMetaTitle(e.target.value)}
             maxLength={60}
@@ -184,7 +184,7 @@ const Addblogs = () => {
           </label>
           <textarea
             placeholder="SEO meta description (160 characters max)..."
-            className="w-full p-4 border-2 border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-[#1e9e9a] focus:border-[#1e9e9a] transition-all duration-200 resize-vertical"
+            className="w-full p-4 border-2 border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-[#1e477f] focus:border-[#1e477f] transition-all duration-200 resize-vertical"
             rows={3}
             value={metaDescription}
             onChange={(e) => setMetaDescription(e.target.value)}
@@ -203,7 +203,7 @@ const Addblogs = () => {
           <input
             type="text"
             placeholder="Enter tags separated by commas..."
-            className="w-full p-4 border-2 border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-[#1e9e9a] focus:border-[#1e9e9a] transition-all duration-200"
+            className="w-full p-4 border-2 border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-[#1e477f] focus:border-[#1e477f] transition-all duration-200"
             value={tags}
             onChange={(e) => setTags(e.target.value)}
           />
@@ -220,7 +220,7 @@ const Addblogs = () => {
           <input
             type="text"
             placeholder="Enter keywords separated by commas..."
-            className="w-full p-4 border-2 border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-[#1e9e9a] focus:border-[#1e9e9a] transition-all duration-200"
+            className="w-full p-4 border-2 border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-[#1e477f] focus:border-[#1e477f] transition-all duration-200"
             value={keywords}
             onChange={(e) => setKeywords(e.target.value)}
           />
@@ -242,7 +242,7 @@ const Addblogs = () => {
                 onClick={() => setCategory(cat)}
                 className={`px-3 py-1 rounded-full text-sm ${
                   category === cat
-                    ? "bg-[#1e9e9a] text-white"
+                    ? "bg-[#1d4882] text-white"
                     : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                 }`}
               >
@@ -253,7 +253,7 @@ const Addblogs = () => {
           <input
             type="text"
             placeholder="Or enter a custom category"
-            className="w-full p-4 border-2 border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-[#1e9e9a] focus:border-[#1e9e9a] transition-all duration-200"
+            className="w-full p-4 border-2 border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-[#1e477f] focus:border-[#1e477f] transition-all duration-200"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           />
@@ -268,7 +268,7 @@ const Addblogs = () => {
             type="file"
             accept="image/*"
             onChange={handleImageChange}
-            className="w-full p-3 border-2 border-gray-300 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#1e9e9a] file:text-white file:cursor-pointer hover:file:bg-[#17807d] transition-all duration-200"
+            className="w-full p-3 border-2 border-gray-300 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#1d4882] file:text-white file:cursor-pointer hover:file:bg-[#17807d] transition-all duration-200"
             required
           />
           {preview && (
@@ -289,7 +289,7 @@ const Addblogs = () => {
           <label className="block mb-3 font-semibold text-gray-700 text-lg">
             Blog Content *
           </label>
-          <div className="border-2 border-gray-300 rounded-lg focus-within:ring-2 focus-within:ring-[#1e9e9a] focus-within:border-[#1e9e9a] transition-all duration-200">
+          <div className="border-2 border-gray-300 rounded-lg focus-within:ring-2 focus-within:ring-[#1e477f] focus-within:border-[#1e477f] transition-all duration-200">
             <JoditEditor
               ref={editor}
               value={body}

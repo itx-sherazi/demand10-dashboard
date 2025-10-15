@@ -9,7 +9,7 @@ export default function Header({ sidebarOpen, toggleSidebar }) {
           {/* Notification Icon */}
           <button className="relative p-1">
             <Bell size={24} className="text-gray-700" />
-            <span className="absolute top-0 right-0 w-2 h-2 bg-[#1e9e9a] rounded-full"></span>
+            <span className="absolute top-0 right-0 w-2 h-2 bg-[#1e477f] rounded-full"></span>
           </button>
 
           {/* Profile Section */}
