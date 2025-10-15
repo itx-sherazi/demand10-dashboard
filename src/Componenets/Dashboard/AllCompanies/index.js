@@ -229,7 +229,7 @@ const SearchBar = ({ searchQuery, onSearch, resultsCount }) => {
       </div>
       {searchQuery && (
         <p className="mt-2 text-sm text-gray-600">
-          {resultsCount || 0} companies found for "<span className="font-medium">{searchQuery}</span>"
+          {resultsCount || 0} companies found for &quot;<span className="font-medium">{searchQuery}</span>&quot;
         </p>
       )}
     </div>
@@ -813,7 +813,7 @@ export default function AllCompaniesTeamData() {
                       <div className="text-center py-8 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
                         <Users className="w-12 h-12 text-gray-400 mx-auto mb-3" />
                         <p className="text-gray-500">No team leads added yet</p>
-                        <p className="text-sm text-gray-400">Click "Add Team Lead" to get started</p>
+                        <p className="text-sm text-gray-400">Click &quot;Add Team Lead&quot; to get started</p>
                       </div>
                     )}
                   </div>
