@@ -92,24 +92,9 @@ const LoginPage = () => {
           
           {/* Logo Section */}
           <div className="text-center pt-8 pb-4">
-            <div className="mb-4">
-              <Image
-                src="/images/companyImage.png"
-                width={100}
-                height={100}
-                alt="IntentWire Logo"
-                className="w-24 h-auto mx-auto"
-                onError={(e) => {
-                  e.target.style.display = "none";
-                  e.target.nextSibling.style.display = "block";
-                }}
-              />
-              <div className="hidden w-16 h-16 bg-gradient-to-r from-blue-600 to-red-600 rounded-2xl flex items-center justify-center mx-auto">
-                <span className="text-white font-bold text-xl">IW</span>
-              </div>
-            </div>
+            
             <h2 className="text-2xl font-bold text-gray-800 mb-1">
-              Welcome to IntentWire
+              Welcome to Demand10
             </h2>
             <p className="text-gray-600 text-sm">Please login to continue</p>
           </div>

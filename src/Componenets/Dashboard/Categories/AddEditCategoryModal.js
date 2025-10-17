@@ -63,7 +63,7 @@ const AddEditCategoryModal = ({
           <h2 className="text-2xl font-bold text-gray-800 mb-2">
             {selectedItem ? "Edit Category" : "Add New Category"}
           </h2>
-          <div className="w-16 h-1 bg-[#4ecfc5] mx-auto rounded-full"></div>
+          <div className="w-16 h-1 bg-[#1a365d] mx-auto rounded-full"></div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -74,7 +74,7 @@ const AddEditCategoryModal = ({
             <Input
               name="name"
               placeholder="Enter category name"
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#4ecfc5] focus:outline-none transition-colors"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#1a365d] focus:outline-none transition-colors"
               onChange={handleChange}
               value={form.name}
               required
@@ -99,7 +99,7 @@ const AddEditCategoryModal = ({
               }
               type="submit"
               loading={loading}
-              className="px-6 py-3 bg-[#4ecfc5] hover:bg-[#3bb5ab] text-white rounded-lg transition-colors font-medium"
+              className="px-6 py-3 bg-[#1a365d] hover:bg-[#3bb5ab] text-white rounded-lg transition-colors font-medium"
             />
           </div>
         </form>

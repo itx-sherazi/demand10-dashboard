@@ -121,49 +121,11 @@ export const deleteRequestById = async (id) => {
   }
 };
 
-export const updateCompany = async (companyId, formData) => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/updateproduct/${companyId}`, {
-      method: "PUT",
-      body: formData,
-      credentials: "include"
-    });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || "Failed to update car");
-    }
 
-    const data = await response.json();
+;
 
-    return data.product;
-  } catch (error) {
-    console.error("Error updating car:", error);
-    throw error;
-  }
-};
 
-export const fetchProductDetail = async (slug) => {
-  try {
-    const response = await axios.get(`${API_BASE_URL}/product/${slug}`);
-    return response.data;
-  } catch (error) {
-    throw new Error("Failed to fetch product");
-  }
-};
-
-export const addProductService = async (formData) => {
-  try {
-    const response = await axios.post(`${API_BASE_URL}/add-product`, formData, {
-      withCredentials: true,
-    });
-
-    return response.data;
-  } catch (error) {
-    console.error("Error in addProductService:", error);
-    throw error;
-  }
-};
 
 export const deleteCompany = async (id) => {
   try {
@@ -183,33 +145,8 @@ export const deleteCompany = async (id) => {
   }
 };
 
-export const fetchData = async () => {
-  const response = await fetch(`${API_BASE_URL}/All`, {
-    credentials: "include"
-  });
-  const result = await response.json();
 
-  // Check if data is okay
-  if (!result.ok) {
-    throw new Error("No company found");
-  }
 
-  return result.products;
-};
-
-export const fetchDashboardData = async () => {
-  const response = await fetch(`${API_BASE_URL}/dashboardAllProducts`, {
-    credentials: "include"
-  });
-  const result = await response.json();
-
-  // Check if data is okay
-  if (!result.ok) {
-    throw new Error("No company found");
-  }
-
-  return result.products;
-};
 
 export const deleteBlog = async (id) => {
   try {
@@ -268,39 +205,9 @@ export const fetchRequest = async () => {
   }
 };
 
-export const fetchProductData = async (slug) => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/product/${slug}`, {
-      credentials: "include"
-    });
-    const result = await response.json();
 
-    if (!response.ok) {
-      throw new Error(result.message || "Failed to fetch product");
-    }
 
-    return result;
-  } catch (error) {
-    throw error;
-  }
-};
 
-export const fetchCompanyTabelData = async () => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/getAll`, {
-      credentials: "include"
-    });
-    const result = await response.json();
-
-    if (!response.ok) {
-      throw new Error(result.message || "Failed to fetch product");
-    }
-
-    return result;
-  } catch (error) {
-    throw error;
-  }
-};
 
 // services/api.js
 export const fetchBlog = async (page = 1, limit = 10) => {
@@ -313,68 +220,11 @@ export const fetchBlog = async (page = 1, limit = 10) => {
   };
 };
 
-export const addProduct = async (formData, imageFile) => {
-  const submitData = new FormData();
 
-  Object.keys(formData).forEach((key) => {
-    if (formData[key]) {
-      submitData.append(key, formData[key]);
-    }
-  });
 
-  submitData.append("image", imageFile);
 
-  const response = await fetch(`${API_BASE_URL}/add-product`, {
-    method: "POST",
-    body: submitData,
-  });
 
-  const result = await response.json();
 
-  if (!response.ok) {
-    throw new Error(result.message || "Failed to add product");
-  }
-
-  return result;
-};
-
-export const fetchSampelCompany = async () => {
-  const response = await fetch(`${API_BASE_URL}/getAll`, {
-    credentials: "include"
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch companies");
-  }
-
-  const result = await response.json();
-  return result.product;
-};
-
-export const AddSampelData = async (formData, imageFile) => {
-  const submitData = new FormData();
-
-  Object.keys(formData).forEach((key) => {
-    if (formData[key]) {
-      submitData.append(key, formData[key]);
-    }
-  });
-
-  submitData.append("image", imageFile);
-
-  const response = await fetch(`${API_BASE_URL}/add`, {
-    method: "POST",
-    body: submitData,
-  });
-
-  const result = await response.json();
-
-  if (!response.ok) {
-    throw new Error(result.message || "Failed to add product");
-  }
-
-  return result;
-};
 
 export const updateSampelData = async (companyId, formData) => {
   try {
@@ -396,23 +246,7 @@ export const updateSampelData = async (companyId, formData) => {
   }
 };
 
-export const deleteSampelCompany = async (id) => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/deleteCompany/${id}`, {
-      method: "DELETE",
-      credentials: "include"
-    });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    return true;
-  } catch (error) {
-    console.error("Error deleting car:", error);
-    throw error;
-  }
-};
 
 export const deleteDataSet = async (id) => {
   try {
@@ -839,47 +673,10 @@ export const  fetchCompaniesSearch = async (searchParams) => {
   return data.data || [];
 }
 
-export const fetchTrending = async () => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/trending`, {
-      credentials: "include"
-    });
-    const data = await response.json(); // 👈 yeh zaroori hai
 
-    return {
-      products: data?.products || [],
-    };
-  } catch (error) {
-    console.error("Service Error:", error);
-    throw error;
-  }
-};
 
-export const uploadOgImage = async (formData) => {
-  try {
-    const response = await axios.post(`${API_BASE_URL}/upload-og-image`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      withCredentials: true,
-    });
-    return response.data;
-  } catch (error) {
-    throw error.response?.data || { error: "Upload failed" };
-  }
-};
 
-// Get Current OG Image
-export const getOgImage = async () => {
-  try {
-    const response = await axios.get(`${API_BASE_URL}/og-image`, {
-      withCredentials: true,
-    });
-    return response.data;
-  } catch (error) {
-    throw error.response?.data || { error: "Failed to fetch OG image" };
-  }
-};
+
 
 // 🆕 Get All Companies with Pagination and Search
 export const getAllCompanies = async (page = 1, limit = 50, search = '') => {

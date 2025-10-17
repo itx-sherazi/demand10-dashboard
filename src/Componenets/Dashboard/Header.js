@@ -19,7 +19,7 @@ export default function Header({ sidebarOpen, toggleSidebar }) {
             </div>
             <div className="hidden md:block">s
               <p className="text-sm font-medium">Admin</p>
-              <p className="text-xs text-gray-500">info@intentwire.com </p>
+              <p className="text-xs text-gray-500">info@demand10.com </p>
             </div>
           </div>
         </div>

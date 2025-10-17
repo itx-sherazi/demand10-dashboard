@@ -27,7 +27,7 @@ const CategoriesMain = () => {
         <div className="flex gap-2 justify-center">
           <button
             onClick={() => handleEditClick(item)}
-            className="bg-[#4ecfc5] hover:bg-[#3bb5ab] text-white px-4 py-2 rounded-lg transition-colors"
+            className="bg-[#1a365d] hover:bg-[#3bb5ab] text-white px-4 py-2 rounded-lg transition-colors"
           >
             Edit
           </button>

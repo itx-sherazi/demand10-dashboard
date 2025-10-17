@@ -84,7 +84,7 @@ const Pagination = ({
                   disabled={loading}
                   className={`px-3 py-2 rounded-lg border transition-all duration-200 ${
                     currentPage === page
-                      ? "bg-[#4ecfc5] text-white border-[#4ecfc5] shadow-lg"
+                      ? "bg-[#1a365d] text-white border-[#1a365d] shadow-lg"
                       : "border-gray-300 bg-white hover:bg-gray-50 text-gray-700"
                   } disabled:opacity-50 disabled:cursor-not-allowed`}
                 >
@@ -119,7 +119,7 @@ const Pagination = ({
       {/* Loading indicator */}
       {loading && (
         <div className="flex items-center space-x-2 text-sm text-gray-500">
-          <div className="w-4 h-4 border-2 border-[#4ecfc5] border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-4 h-4 border-2 border-[#1a365d] border-t-transparent rounded-full animate-spin"></div>
           <span>Loading products...</span>
         </div>
       )}

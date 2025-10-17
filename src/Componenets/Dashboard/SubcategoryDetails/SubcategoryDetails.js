@@ -285,7 +285,7 @@ const SubcategoryDetails = () => {
         <select
           value={selectedCategory}
           onChange={handleCategoryChange}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
         >
           <option value="">Select a category</option>
           {categoriesList.map((category) => (
@@ -305,7 +305,7 @@ const SubcategoryDetails = () => {
           <select
             value={selectedSubcategory}
             onChange={handleSubcategoryChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
             disabled={loading}
           >
             <option value="">Select a subcategory</option>
@@ -321,7 +321,7 @@ const SubcategoryDetails = () => {
       {/* Loading indicator */}
       {loading && (
         <div className="text-center py-8">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#4ecfc5]"></div>
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#1a365d]"></div>
           <p className="mt-2 text-gray-600">Loading subcategory details...</p>
         </div>
       )}
@@ -342,7 +342,7 @@ const SubcategoryDetails = () => {
                   type="text"
                   value={subcategoryDetails.details.heading || ""}
                   onChange={(e) => handleDetailChange("heading", e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                   placeholder="Enter heading"
                 />
               </div>
@@ -355,7 +355,7 @@ const SubcategoryDetails = () => {
                   type="text"
                   value={subcategoryDetails.details.metaTitle || ""}
                   onChange={(e) => handleDetailChange("metaTitle", e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                   placeholder="Enter meta title"
                 />
               </div>
@@ -368,7 +368,7 @@ const SubcategoryDetails = () => {
                   value={subcategoryDetails.details.metaDescription || ""}
                   onChange={(e) => handleDetailChange("metaDescription", e.target.value)}
                   rows="3"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                   placeholder="Enter meta description"
                 />
               </div>
@@ -391,7 +391,7 @@ const SubcategoryDetails = () => {
                     
                     handleDetailChange("metaKeywords", resultArray);
                   }}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                   placeholder="Enter keywords separated by commas"
                 />
               </div>
@@ -413,14 +413,14 @@ const SubcategoryDetails = () => {
                       type="text"
                       value={country.country || ""}
                       onChange={(e) => handleArrayChange("countries", index, "country", e.target.value)}
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                       placeholder="Country"
                     />
                     <input
                       type="number"
                       value={country.percentage || ""}
                       onChange={(e) => handleArrayChange("countries", index, "percentage", parseFloat(e.target.value) || 0)}
-                      className="w-20 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                      className="w-20 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                       placeholder="%"
                     />
                     <button
@@ -452,14 +452,14 @@ const SubcategoryDetails = () => {
                       type="text"
                       value={region.region || ""}
                       onChange={(e) => handleArrayChange("regions", index, "region", e.target.value)}
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                       placeholder="Region"
                     />
                     <input
                       type="number"
                       value={region.percentage || ""}
                       onChange={(e) => handleArrayChange("regions", index, "percentage", parseFloat(e.target.value) || 0)}
-                      className="w-20 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                      className="w-20 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                       placeholder="%"
                     />
                     <button
@@ -498,14 +498,14 @@ const SubcategoryDetails = () => {
                       type="text"
                       value={size.range || ""}
                       onChange={(e) => handleArrayChange("employeeSizeBreakdown", index, "range", e.target.value)}
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                       placeholder="Employee range"
                     />
                     <input
                       type="number"
                       value={size.percentage || ""}
                       onChange={(e) => handleArrayChange("employeeSizeBreakdown", index, "percentage", parseFloat(e.target.value) || 0)}
-                      className="w-20 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                      className="w-20 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                       placeholder="%"
                     />
                     <button
@@ -537,14 +537,14 @@ const SubcategoryDetails = () => {
                       type="text"
                       value={size.range || ""}
                       onChange={(e) => handleArrayChange("revenueSizeBreakdown", index, "range", e.target.value)}
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                       placeholder="Revenue range"
                     />
                     <input
                       type="number"
                       value={size.percentage || ""}
                       onChange={(e) => handleArrayChange("revenueSizeBreakdown", index, "percentage", parseFloat(e.target.value) || 0)}
-                      className="w-20 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                      className="w-20 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                       placeholder="%"
                     />
                     <button
@@ -583,14 +583,14 @@ const SubcategoryDetails = () => {
                       type="text"
                       value={service.service || ""}
                       onChange={(e) => handleArrayChange("servicesOffered", index, "service", e.target.value)}
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                       placeholder="Service name"
                     />
                     <input
                       type="number"
                       value={service.percentage || ""}
                       onChange={(e) => handleArrayChange("servicesOffered", index, "percentage", parseFloat(e.target.value) || 0)}
-                      className="w-20 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                      className="w-20 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                       placeholder="%"
                     />
                     <button
@@ -638,7 +638,7 @@ const SubcategoryDetails = () => {
                             }
                           }));
                         }}
-                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                         placeholder="Provider name"
                       />
                       <input
@@ -658,7 +658,7 @@ const SubcategoryDetails = () => {
                             }
                           }));
                         }}
-                        className="w-20 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                        className="w-20 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                         placeholder="%"
                       />
                       <button
@@ -852,14 +852,14 @@ const SubcategoryDetails = () => {
                   type="text"
                   value={dm.role || ""}
                   onChange={(e) => handleArrayChange("decisionMakers", index, "role", e.target.value)}
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                   placeholder="Role"
                 />
                 <input
                   type="number"
                   value={dm.contacts || ""}
                   onChange={(e) => handleArrayChange("decisionMakers", index, "contacts", parseInt(e.target.value) || 0)}
-                  className="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                  className="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                   placeholder="Contacts"
                 />
                 <button
@@ -903,7 +903,7 @@ const SubcategoryDetails = () => {
                       }
                     }
                   }))}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                 />
               </div>
               
@@ -924,7 +924,7 @@ const SubcategoryDetails = () => {
                       }
                     }
                   }))}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                 />
               </div>
               
@@ -945,7 +945,7 @@ const SubcategoryDetails = () => {
                       }
                     }
                   }))}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                 />
               </div>
               
@@ -966,7 +966,7 @@ const SubcategoryDetails = () => {
                       }
                     }
                   }))}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                 />
               </div>
               
@@ -1051,7 +1051,7 @@ const SubcategoryDetails = () => {
               label={saving ? "Saving..." : "Save Details"}
               onClick={handleSaveDetails}
               loading={saving}
-              className="px-6 py-3 bg-[#4ecfc5] hover:bg-[#3bb5ab] text-white rounded-lg font-medium"
+              className="px-6 py-3 bg-[#1a365d] hover:bg-[#3bb5ab] text-white rounded-lg font-medium"
               disabled={saving}
             />
           </div>

@@ -276,7 +276,7 @@ const SubcategoryManagement = () => {
         <select
           value={selectedCategory}
           onChange={handleCategoryChange}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
         >
           <option value="">Select a category</option>
           {categoriesList.map((category) => (
@@ -321,7 +321,7 @@ const SubcategoryManagement = () => {
                         value={item.name}
                         onChange={(e) => handleNewSubcategoryChange(index, "name", e.target.value)}
                         placeholder="Enter subcategory name"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                       />
                     </div>
 
@@ -334,7 +334,7 @@ const SubcategoryManagement = () => {
                         onChange={(e) => handleNewSubcategoryChange(index, "description", e.target.value)}
                         placeholder="Enter description"
                         rows="3"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent resize-none"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent resize-none"
                       />
                     </div>
 
@@ -348,7 +348,7 @@ const SubcategoryManagement = () => {
                         value={item.totalCompanies}
                         onChange={(e) => handleNewSubcategoryChange(index, "totalCompanies", e.target.value)}
                         placeholder="Enter total companies (e.g., 23,450)"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                       />
                       <p className="text-xs text-gray-500 mt-1">
                         You can use commas to format numbers (e.g., 1,234,567)
@@ -373,7 +373,7 @@ const SubcategoryManagement = () => {
                 label={loading ? "Saving..." : "Save New Subcategories"}
                 onClick={handleSaveNewSubcategories}
                 loading={loading}
-                className="px-6 py-3 bg-[#4ecfc5] hover:bg-[#3bb5ab] text-white rounded-lg font-medium"
+                className="px-6 py-3 bg-[#1a365d] hover:bg-[#3bb5ab] text-white rounded-lg font-medium"
                 disabled={loading}
               />
             </div>
@@ -416,7 +416,7 @@ const SubcategoryManagement = () => {
                           value={item.name}
                           onChange={(e) => handleExistingSubcategoryChange(index, "name", e.target.value)}
                           placeholder="Enter subcategory name"
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                         />
                       </div>
 
@@ -429,7 +429,7 @@ const SubcategoryManagement = () => {
                           onChange={(e) => handleExistingSubcategoryChange(index, "description", e.target.value)}
                           placeholder="Enter description"
                           rows="3"
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent resize-none"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent resize-none"
                         />
                       </div>
 
@@ -443,7 +443,7 @@ const SubcategoryManagement = () => {
                           value={item.totalCompanies}
                           onChange={(e) => handleExistingSubcategoryChange(index, "totalCompanies", e.target.value)}
                           placeholder="Enter total companies (e.g., 23,450)"
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
                         />
                         <p className="text-xs text-gray-500 mt-1">
                           You can use commas to format numbers (e.g., 1,234,567)
@@ -461,7 +461,7 @@ const SubcategoryManagement = () => {
                   label={loading ? "Updating..." : "Update Subcategories"}
                   onClick={handleUpdateExistingSubcategories}
                   loading={loading}
-                  className="px-6 py-3 bg-[#4ecfc5] hover:bg-[#3bb5ab] text-white rounded-lg font-medium"
+                  className="px-6 py-3 bg-[#1a365d] hover:bg-[#3bb5ab] text-white rounded-lg font-medium"
                   disabled={loading}
                 />
               </div>

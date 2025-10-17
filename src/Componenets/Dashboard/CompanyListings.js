@@ -23,7 +23,7 @@ export default function CompanyListings() {
     if (imagePath.startsWith('http')) return imagePath;
     
     // If it's a relative path, prepend the API base URL
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.demand10.com/api/v1';
     // Remove /api/v1 prefix if it exists in the imagePath since uploads are served directly
     const cleanPath = imagePath.startsWith('/api/v1') ? imagePath.substring(7) : imagePath;
     // For uploads, we need to remove the /api/v1 part from the base URL
@@ -149,7 +149,7 @@ export default function CompanyListings() {
       <div className="bg-white rounded-lg shadow p-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Company Listings</h2>
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#4ecfc5]"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#1a365d]"></div>
         </div>
       </div>
     );

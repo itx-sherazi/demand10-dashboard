@@ -195,11 +195,11 @@
             </h2>
             <p className="text-gray-600 mb-4">
               Category:{" "}
-              <span className="font-semibold text-[#4ecfc5]">
+              <span className="font-semibold text-[#1a365d]">
                 {selectedItem?.name}
               </span>
             </p>
-            <div className="w-16 h-1 bg-[#4ecfc5] mx-auto rounded-full"></div>
+            <div className="w-16 h-1 bg-[#1a365d] mx-auto rounded-full"></div>
           </div>
 
           <div className="flex justify-center gap-6 mb-6 p-4 bg-gray-50 rounded-lg">
@@ -210,7 +210,7 @@
                 value="add"
                 checked={subMode === "add"}
                 onChange={() => setSubMode("add")}
-                className="text-[#4ecfc5] focus:ring-[#4ecfc5]"
+                className="text-[#1a365d] focus:ring-[#1a365d]"
               />
               <span className="font-medium text-gray-700">Add New</span>
             </label>
@@ -221,7 +221,7 @@
                 value="edit"
                 checked={subMode === "edit"}
                 onChange={() => setSubMode("edit")}
-                className="text-[#4ecfc5] focus:ring-[#4ecfc5]"
+                className="text-[#1a365d] focus:ring-[#1a365d]"
               />
               <span className="font-medium text-gray-700">Edit Existing</span>
             </label>
@@ -257,7 +257,7 @@
                         value={item.name}
                         onChange={(e) => handleSubcategoryChange(index, "name", e.target.value)}
                         placeholder="Enter subcategory name"
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#4ecfc5] focus:outline-none"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#1a365d] focus:outline-none"
                         required
                       />
                     </div>
@@ -271,7 +271,7 @@
                         onChange={(e) => handleSubcategoryChange(index, "description", e.target.value)}
                         placeholder="Enter description"
                         rows="3"
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#4ecfc5] focus:outline-none resize-none"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#1a365d] focus:outline-none resize-none"
                         required
                       />
                     </div>
@@ -286,7 +286,7 @@
                         value={item.totalCompanies}
                         onChange={(e) => handleSubcategoryChange(index, "totalCompanies", e.target.value)}
                         placeholder="Enter total companies (e.g., 222,334,342)"
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#4ecfc5] focus:outline-none"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#1a365d] focus:outline-none"
                         required
                       />
                       <p className="text-xs text-gray-500 mt-1">
@@ -322,7 +322,7 @@
               label={loading ? "Saving..." : "Save Subcategories"}
               onClick={handleSubmit}
               loading={loading}
-              className="px-6 py-3 bg-[#4ecfc5] hover:bg-[#3bb5ab] text-white rounded-lg font-medium"
+              className="px-6 py-3 bg-[#1a365d] hover:bg-[#3bb5ab] text-white rounded-lg font-medium"
               disabled={loading}
             />
           </div>

@@ -104,7 +104,7 @@ const Sheet = () => {
               setAddCompanyModal(true);
               setSelectedItem(item);
             }}
-            className={'!bg-[#4ecfc5] hover:!bg-[#3bb5ab] text-white px-4 py-2 rounded-lg transition-colors duration-200'}
+            className={'!bg-[#1a365d] hover:!bg-[#3bb5ab] text-white px-4 py-2 rounded-lg transition-colors duration-200'}
           />
           <Button
             label={'Delete'}
@@ -141,7 +141,7 @@ const Sheet = () => {
             placeholder="Search subcategories..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 pr-4 py-2 w-80 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4ecfc5] focus:border-transparent outline-none transition-all duration-200"
+            className="pl-10 pr-4 py-2 w-80 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent outline-none transition-all duration-200"
           />
           {searchTerm && (
             <button
@@ -168,8 +168,8 @@ const Sheet = () => {
         <div className="fixed inset-0 flex items-center justify-center bg-black/10 bg-opacity-50 z-50 p-4">
           <div className="bg-white p-8 rounded-xl shadow-2xl w-full max-w-[500px] mx-auto transform transition-all duration-300 scale-100">
             <div className="text-center mb-6">
-              <div className="w-16 h-16 bg-[#4ecfc5] bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-[#4ecfc5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-16 h-16 bg-[#1a365d] bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-[#1a365d]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                 </svg>
               </div>
@@ -177,14 +177,14 @@ const Sheet = () => {
                 Upload Excel Sheet
               </h2>
               <p className="text-gray-600 mb-4">
-                For: <span className="font-semibold text-[#4ecfc5]">{selectedItem?.name}</span>
+                For: <span className="font-semibold text-[#1a365d]">{selectedItem?.name}</span>
               </p>
-              <div className="w-16 h-1 bg-[#4ecfc5] mx-auto rounded-full"></div>
+              <div className="w-16 h-1 bg-[#1a365d] mx-auto rounded-full"></div>
             </div>
 
             <div className="space-y-6">
               {/* File Upload Area */}
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-[#4ecfc5] transition-colors duration-200">
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-[#1a365d] transition-colors duration-200">
                 <input
                   type="file"
                   accept=".xlsx, .xls"
@@ -213,9 +213,9 @@ const Sheet = () => {
 
               {/* Loading Indicator */}
               {loading && (
-                <div className="flex items-center justify-center space-x-2 p-4 bg-[#4ecfc5] bg-opacity-10 rounded-lg">
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[#4ecfc5]"></div>
-                  <span className="text-[#4ecfc5] font-medium">Uploading file...</span>
+                <div className="flex items-center justify-center space-x-2 p-4 bg-[#1a365d] bg-opacity-10 rounded-lg">
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[#1a365d]"></div>
+                  <span className="text-[#1a365d] font-medium">Uploading file...</span>
                 </div>
               )}
 

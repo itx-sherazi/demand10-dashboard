@@ -13,7 +13,7 @@ const CompanyCard = ({ company, onEdit, onDelete, onToggleSponsor, viewMode = "l
     if (imagePath.startsWith('http')) return imagePath;
     
     // If it's a relative path, prepend the API base URL
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://demand10.com/api/v1';
     // Remove /api/v1 prefix if it exists in the imagePath since uploads are served directly
     const cleanPath = imagePath.startsWith('/api/v1') ? imagePath.substring(7) : imagePath;
     // For uploads, we need to remove the /api/v1 part from the base URL
