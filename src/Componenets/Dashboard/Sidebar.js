@@ -19,7 +19,8 @@ import {
   FaFileAlt,
   FaCog,
   FaMedal,
-  FaGlobe
+  FaGlobe,
+  FaFileInvoice
 } from "react-icons/fa";
 
 export default function Sidebar({
@@ -137,7 +138,14 @@ export default function Sidebar({
           onClick={() => setActiveTab("SubcategoryDetails")}
           sidebarOpen={sidebarOpen}
         />
-        
+         {/* Subcategory Content Tab */}
+        <SidebarButton
+          icon={<FaFileInvoice size={20} />}
+          label="Subcategory Content"
+          isActive={activeTab === "SubcategoryContent"}
+          onClick={() => setActiveTab("SubcategoryContent")}
+          sidebarOpen={sidebarOpen}
+        />
         
         
         <SidebarButton

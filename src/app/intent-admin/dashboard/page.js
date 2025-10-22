@@ -17,6 +17,7 @@ import SubcategoryManagement from "@/Componenets/Dashboard/SubcategoryManagement
 import SubcategoryDetails from "@/Componenets/Dashboard/SubcategoryDetails"; // New import
 import WebsiteUsers from "@/Componenets/Dashboard/WebsiteUsers"; // New import
 import Badges from "@/Componenets/Dashboard/Badges"; // New import
+import SubcategoryContent from "@/Componenets/Dashboard/SubcategoryContent";
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("blog");
@@ -48,7 +49,8 @@ export default function Dashboard() {
         return <SubcategoryManagement />;
       case "SubcategoryDetails": // New case
         return <SubcategoryDetails />;
-      
+        case "SubcategoryContent": // New case
+        return <SubcategoryContent />;
       case "allCompanies":
         return <AllCompanies />;
       case "CompanyClaims":
