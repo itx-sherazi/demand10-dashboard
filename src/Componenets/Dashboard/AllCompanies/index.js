@@ -214,14 +214,60 @@ const MapView = ({ companies, onEdit, onDelete, onToggleSponsor }) => {
 };
 
 // Search Bar Component
-const SearchBar = ({ searchQuery, onSearch, resultsCount }) => {
+const SearchBar = ({ searchQuery, searchType, onSearch, onSearchTypeChange, resultsCount }) => {
   return (
     <div className="mb-6">
+      {/* Search Type Toggle */}
+      <div className="flex items-center mb-3">
+        <span className="text-sm text-gray-600 mr-3">Search by:</span>
+        <div className="inline-flex rounded-md shadow-sm" role="group">
+          <button
+            type="button"
+            onClick={() => onSearchTypeChange('company')}
+            className={`px-4 py-2 text-sm font-medium rounded-l-lg border ${
+              searchType === 'company' 
+                ? 'bg-blue-600 text-white border-blue-600' 
+                : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+            }`}
+          >
+            Company Name
+          </button>
+          <button
+            type="button"
+            onClick={() => onSearchTypeChange('subcategory')}
+            className={`px-4 py-2 text-sm font-medium border-t border-b ${
+              searchType === 'subcategory' 
+                ? 'bg-blue-600 text-white border-blue-600' 
+                : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+            }`}
+          >
+            Subcategory
+          </button>
+          <button
+            type="button"
+            onClick={() => onSearchTypeChange('employees')}
+            className={`px-4 py-2 text-sm font-medium rounded-r-lg border-t border-b border-r ${
+              searchType === 'employees' 
+                ? 'bg-blue-600 text-white border-blue-600' 
+                : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+            }`}
+          >
+            Employees
+          </button>
+        </div>
+      </div>
+      
       <div className="relative max-w-md">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
         <input
           type="text"
-          placeholder="Search companies..."
+          placeholder={
+            searchType === 'company' 
+              ? "Search by company name..." 
+              : searchType === 'subcategory' 
+                ? "Search by subcategory name..." 
+                : "Search by number of employees..."
+          }
           value={searchQuery}
           onChange={onSearch}
           className="pl-12 pr-4 py-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
@@ -229,7 +275,7 @@ const SearchBar = ({ searchQuery, onSearch, resultsCount }) => {
       </div>
       {searchQuery && (
         <p className="mt-2 text-sm text-gray-600">
-          {resultsCount || 0} companies found for &quot;<span className="font-medium">{searchQuery}</span>&quot;
+          {resultsCount || 0} companies found for &quot;<span className="font-medium">{searchQuery}</span>&quot; in {searchType}
         </p>
       )}
     </div>
@@ -276,7 +322,7 @@ const LoadingSpinner = () => {
 };
 
 // Empty State Component
-const EmptyState = ({ searchQuery }) => {
+const EmptyState = ({ searchQuery, searchType }) => {
   return (
     <div className="text-center py-16">
       <div className="mb-6">
@@ -284,7 +330,7 @@ const EmptyState = ({ searchQuery }) => {
         <h3 className="text-xl font-medium text-gray-900 mb-2">No companies found</h3>
         <p className="text-gray-600 max-w-md mx-auto">
           {searchQuery 
-            ? `No companies match "${searchQuery}". Try adjusting your search terms.`
+            ? `No companies match "${searchQuery}" in ${searchType}. Try adjusting your search terms.`
             : 'No companies are available at the moment. Check back later or add some companies.'
           }
         </p>
@@ -370,11 +416,27 @@ const TeamLeadForm = ({ lead, index, onChange, onRemove }) => {
 
 // Main Component
 export default function AllCompaniesTeamData() {
+  // Function to get the full image URL
+  const getImageUrl = (imagePath) => {
+    // If it's already a full URL, return as is
+    if (!imagePath) return null;
+    if (imagePath.startsWith('http')) return imagePath;
+    
+    // If it's a relative path, prepend the API base URL
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://demand10.com/api/v1';
+    // Remove /api/v1 prefix if it exists in the imagePath since uploads are served directly
+    const cleanPath = imagePath.startsWith('/api/v1') ? imagePath.substring(7) : imagePath;
+    // For uploads, we need to remove the /api/v1 part from the base URL
+    const uploadBaseUrl = baseUrl.replace('/api/v1', '');
+    return `${uploadBaseUrl}${cleanPath}`;
+  };
+
   // State Management
   const [companies, setCompanies] = useState([]);
   const [pagination, setPagination] = useState({});
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchType, setSearchType] = useState('company'); // 'company', 'subcategory', or 'employees'
   const [currentPage, setCurrentPage] = useState(1);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editingCompany, setEditingCompany] = useState(null);
@@ -384,10 +446,10 @@ export default function AllCompaniesTeamData() {
   const [viewMode, setViewMode] = useState('list'); // 'list' or 'map'
 
   // API Functions
-  const loadCompanies = async (page = 1, search = '') => {
+  const loadCompanies = async (page = 1, search = '', searchType = 'company') => {
     setLoading(true);
     try {
-      const data = await getAllCompanies(page, 50, search);
+      const data = await getAllCompanies(page, 50, search, searchType);
       setCompanies(data.companies);
       setPagination(data.pagination);
     } catch (error) {
@@ -403,12 +465,18 @@ export default function AllCompaniesTeamData() {
     const query = e.target.value;
     setSearchQuery(query);
     setCurrentPage(1);
-    loadCompanies(1, query);
+    loadCompanies(1, query, searchType);
+  };
+
+  const handleSearchTypeChange = (type) => {
+    setSearchType(type);
+    // Reload companies with the new search type
+    loadCompanies(1, searchQuery, type);
   };
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
-    loadCompanies(newPage, searchQuery);
+    loadCompanies(newPage, searchQuery, searchType);
   };
 
   const openEditModal = (company) => {
@@ -487,10 +555,10 @@ export default function AllCompaniesTeamData() {
     }
 
     try {
-      await updateCompanyWithTeamLeads(editingCompany._id, updateFormData);
+      await updateCompanyWithTeamLeads(editingCompany.slug, updateFormData);
       toast.success('Company updated successfully!');
       setEditModalOpen(false);
-      loadCompanies(currentPage, searchQuery);
+      loadCompanies(currentPage, searchQuery, searchType);
     } catch (error) {
       toast.error('Failed to update company');
       console.error('Update error:', error);
@@ -502,7 +570,7 @@ export default function AllCompaniesTeamData() {
       try {
         await deleteCompanyWithTeamLeads(companyId);
         toast.success('Company deleted successfully!');
-        loadCompanies(currentPage, searchQuery);
+        loadCompanies(currentPage, searchQuery, searchType);
       } catch (error) {
         toast.error('Failed to delete company');
         console.error('Delete error:', error);
@@ -534,7 +602,7 @@ export default function AllCompaniesTeamData() {
 
   // Initial Load
   useEffect(() => {
-    loadCompanies();
+    loadCompanies(1, '', 'company');
   }, []);
 
   return (
@@ -575,7 +643,9 @@ export default function AllCompaniesTeamData() {
           
           <SearchBar 
             searchQuery={searchQuery}
+            searchType={searchType}
             onSearch={handleSearch}
+            onSearchTypeChange={handleSearchTypeChange}
             resultsCount={pagination.totalCompanies}
           />
         </div>
@@ -611,7 +681,7 @@ export default function AllCompaniesTeamData() {
 
         {/* Empty State */}
         {!loading && companies.length === 0 && (
-          <EmptyState searchQuery={searchQuery} />
+          <EmptyState searchQuery={searchQuery} searchType={searchType} />
         )}
 
         {/* Pagination */}

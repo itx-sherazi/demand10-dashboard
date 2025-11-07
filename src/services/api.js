@@ -679,12 +679,13 @@ export const  fetchCompaniesSearch = async (searchParams) => {
 
 
 // 🆕 Get All Companies with Pagination and Search
-export const getAllCompanies = async (page = 1, limit = 50, search = '') => {
+export const getAllCompanies = async (page = 1, limit = 50, search = '', searchType = 'company') => {
   try {
     const params = new URLSearchParams({
       page: page.toString(),
       limit: limit.toString(),
-      ...(search && { search })
+      ...(search && { search }),
+      ...(search && { searchType })
     });
     
     const response = await fetch(`${API_BASE_URL}/companies/all?${params}`, {
@@ -705,9 +706,9 @@ export const getAllCompanies = async (page = 1, limit = 50, search = '') => {
 };
 
 // 🆕 Update Company with Team Leads
-export const updateCompanyWithTeamLeads = async (companyId, formData) => {
+export const updateCompanyWithTeamLeads = async (companySlug, formData) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/updateCompanyTeam/${companyId}`, {
+    const response = await fetch(`${API_BASE_URL}/updateCompanyTeamBySlug/${companySlug}`, {
       method: "PUT",
       body: formData,
       credentials: "include"
