@@ -214,7 +214,19 @@ const MapView = ({ companies, onEdit, onDelete, onToggleSponsor }) => {
 };
 
 // Search Bar Component
-const SearchBar = ({ searchQuery, searchType, onSearch, onSearchTypeChange, resultsCount }) => {
+const SearchBar = ({ searchQuery, searchType, onSearch, onSearchTypeChange, resultsCount, employeeRange, onEmployeeRangeChange }) => {
+  // Define employee range options
+  const employeeRanges = [
+    { value: '', label: 'All Employee Sizes' },
+    { value: '1-10', label: '1-10 employees' },
+    { value: '11-50', label: '11-50 employees' },
+    { value: '51-200', label: '51-200 employees' },
+    { value: '201-500', label: '201-500 employees' },
+    { value: '501-1000', label: '501-1000 employees' },
+    { value: '1001-5000', label: '1001-5000 employees' },
+    { value: '5001+', label: '5001+ employees' }
+  ];
+
   return (
     <div className="mb-6">
       {/* Search Type Toggle */}
@@ -257,22 +269,40 @@ const SearchBar = ({ searchQuery, searchType, onSearch, onSearchTypeChange, resu
         </div>
       </div>
       
-      <div className="relative max-w-md">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-        <input
-          type="text"
-          placeholder={
-            searchType === 'company' 
-              ? "Search by company name..." 
-              : searchType === 'subcategory' 
-                ? "Search by subcategory name..." 
-                : "Search by number of employees..."
-          }
-          value={searchQuery}
-          onChange={onSearch}
-          className="pl-12 pr-4 py-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
-        />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <input
+            type="text"
+            placeholder={
+              searchType === 'company' 
+                ? "Search by company name..." 
+                : searchType === 'subcategory' 
+                  ? "Search by subcategory name..." 
+                  : "Search by number of employees..."
+            }
+            value={searchQuery}
+            onChange={onSearch}
+            className="pl-12 pr-4 py-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
+          />
+        </div>
+        
+        {/* Employee Range Filter */}
+        <div>
+          <select
+            value={employeeRange}
+            onChange={(e) => onEmployeeRangeChange(e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
+          >
+            {employeeRanges.map((range) => (
+              <option key={range.value} value={range.value}>
+                {range.label}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
+      
       {searchQuery && (
         <p className="mt-2 text-sm text-gray-600">
           {resultsCount || 0} companies found for &quot;<span className="font-medium">{searchQuery}</span>&quot; in {searchType}
@@ -437,6 +467,7 @@ export default function AllCompaniesTeamData() {
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchType, setSearchType] = useState('company'); // 'company', 'subcategory', or 'employees'
+  const [employeeRange, setEmployeeRange] = useState(''); // Employee range filter
   const [currentPage, setCurrentPage] = useState(1);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editingCompany, setEditingCompany] = useState(null);
@@ -446,10 +477,10 @@ export default function AllCompaniesTeamData() {
   const [viewMode, setViewMode] = useState('list'); // 'list' or 'map'
 
   // API Functions
-  const loadCompanies = async (page = 1, search = '', searchType = 'company') => {
+  const loadCompanies = async (page = 1, search = '', searchType = 'company', employeeRange = '') => {
     setLoading(true);
     try {
-      const data = await getAllCompanies(page, 50, search, searchType);
+      const data = await getAllCompanies(page, 50, search, searchType, employeeRange);
       setCompanies(data.companies);
       setPagination(data.pagination);
     } catch (error) {
@@ -465,18 +496,24 @@ export default function AllCompaniesTeamData() {
     const query = e.target.value;
     setSearchQuery(query);
     setCurrentPage(1);
-    loadCompanies(1, query, searchType);
+    loadCompanies(1, query, searchType, employeeRange);
   };
 
   const handleSearchTypeChange = (type) => {
     setSearchType(type);
     // Reload companies with the new search type
-    loadCompanies(1, searchQuery, type);
+    loadCompanies(1, searchQuery, type, employeeRange);
+  };
+
+  const handleEmployeeRangeChange = (range) => {
+    setEmployeeRange(range);
+    // Reload companies with the new employee range
+    loadCompanies(1, searchQuery, searchType, range);
   };
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
-    loadCompanies(newPage, searchQuery, searchType);
+    loadCompanies(newPage, searchQuery, searchType, employeeRange);
   };
 
   const openEditModal = (company) => {
@@ -602,7 +639,7 @@ export default function AllCompaniesTeamData() {
 
   // Initial Load
   useEffect(() => {
-    loadCompanies(1, '', 'company');
+    loadCompanies(1, '', 'company', '');
   }, []);
 
   return (
@@ -646,6 +683,8 @@ export default function AllCompaniesTeamData() {
             searchType={searchType}
             onSearch={handleSearch}
             onSearchTypeChange={handleSearchTypeChange}
+            onEmployeeRangeChange={handleEmployeeRangeChange}
+            employeeRange={employeeRange}
             resultsCount={pagination.totalCompanies}
           />
         </div>

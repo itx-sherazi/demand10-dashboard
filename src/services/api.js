@@ -679,13 +679,14 @@ export const  fetchCompaniesSearch = async (searchParams) => {
 
 
 // 🆕 Get All Companies with Pagination and Search
-export const getAllCompanies = async (page = 1, limit = 50, search = '', searchType = 'company') => {
+export const getAllCompanies = async (page = 1, limit = 50, search = '', searchType = 'company', employeeRange = '') => {
   try {
     const params = new URLSearchParams({
       page: page.toString(),
       limit: limit.toString(),
       ...(search && { search }),
-      ...(search && { searchType })
+      ...(search && { searchType }),
+      ...(employeeRange && { employeeRange }) // Add employee range filter
     });
     
     const response = await fetch(`${API_BASE_URL}/companies/all?${params}`, {
