@@ -7,7 +7,7 @@ import Button from "@/Componenets/ui/Button";
 const SubcategoryManagement = () => {
   const [categoriesList, setCategoriesList] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [subcategoryList, setSubcategoryList] = useState([{ name: "", description: "", totalCompanies: "" }]);
+  const [subcategoryList, setSubcategoryList] = useState([{ name: "", description: "", totalCompanies: "", metaTitle: "", metaKeywords: "" }]);
   const [existingSubcategories, setExistingSubcategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -47,7 +47,9 @@ const SubcategoryManagement = () => {
           _id: sub._id,
           name: sub.name || "",
           description: sub.description || "",
-          totalCompanies: sub.totalCompanies ? sub.totalCompanies.toLocaleString() : ""
+          totalCompanies: sub.totalCompanies ? sub.totalCompanies.toLocaleString() : "",
+          metaTitle: sub.metaTitle || "",
+          metaKeywords: sub.metaKeywords && Array.isArray(sub.metaKeywords) ? sub.metaKeywords.join(", ") : ""
         }));
         
         setExistingSubcategories(formattedSubs);
@@ -68,7 +70,7 @@ const SubcategoryManagement = () => {
     if (selectedCategory) {
       fetchSubcategories(selectedCategory);
       // Reset form when category changes
-      setSubcategoryList([{ name: "", description: "", totalCompanies: "" }]);
+      setSubcategoryList([{ name: "", description: "", totalCompanies: "", metaTitle: "", metaKeywords: "" }]);
     } else {
       setExistingSubcategories([]);
     }
@@ -94,11 +96,11 @@ const SubcategoryManagement = () => {
 
   const removeNewSubcategoryField = (index) => {
     const updatedList = subcategoryList.filter((_, i) => i !== index);
-    setSubcategoryList(updatedList.length ? updatedList : [{ name: "", description: "", totalCompanies: "" }]);
+    setSubcategoryList(updatedList.length ? updatedList : [{ name: "", description: "", totalCompanies: "", metaTitle: "", metaKeywords: "" }]);
   };
 
   const addNewSubcategoryField = () => {
-    setSubcategoryList([...subcategoryList, { name: "", description: "", totalCompanies: "" }]);
+    setSubcategoryList([...subcategoryList, { name: "", description: "", totalCompanies: "", metaTitle: "", metaKeywords: "" }]);
   };
 
   const handleExistingSubcategoryChange = (index, field, value) => {
@@ -155,10 +157,19 @@ const SubcategoryManagement = () => {
       // Filter out empty subcategories and remove commas from totalCompanies
       const newSubcategories = subcategoryList
         .filter(sub => sub.name.trim() !== "")
-        .map(sub => ({
-          ...sub,
-          totalCompanies: sub.totalCompanies.replace(/,/g, '') // Remove commas before sending
-        }));
+        .map(sub => {
+          // Process metaKeywords from comma-separated string to array
+          let metaKeywordsArray = [];
+          if (sub.metaKeywords && typeof sub.metaKeywords === 'string') {
+            metaKeywordsArray = sub.metaKeywords.split(',').map(keyword => keyword.trim()).filter(keyword => keyword);
+          }
+          
+          return {
+            ...sub,
+            totalCompanies: sub.totalCompanies.replace(/,/g, ''), // Remove commas before sending
+            metaKeywords: metaKeywordsArray
+          };
+        });
 
       if (newSubcategories.length === 0) {
         toast.info("No new subcategories to add");
@@ -173,7 +184,7 @@ const SubcategoryManagement = () => {
       if (response.status === 201) {
         toast.success(`${newSubcategories.length} subcategory(s) added successfully`);
         // Reset form
-        setSubcategoryList([{ name: "", description: "", totalCompanies: "" }]);
+        setSubcategoryList([{ name: "", description: "", totalCompanies: "", metaTitle: "", metaKeywords: "" }]);
         // Refresh existing subcategories
         fetchSubcategories(selectedCategory);
       } else {
@@ -199,17 +210,31 @@ const SubcategoryManagement = () => {
 
     setLoading(true);
     try {
-      const updateSubcategories = existingSubcategories.map(sub => ({
-        ...sub,
-        totalCompanies: sub.totalCompanies.replace(/,/g, '') // Remove commas before sending
-      }));
+      const updateSubcategories = existingSubcategories.map(sub => {
+        // Process metaKeywords from comma-separated string to array
+        let metaKeywordsArray = [];
+        if (sub.metaKeywords && typeof sub.metaKeywords === 'string') {
+          metaKeywordsArray = sub.metaKeywords.split(',').map(keyword => keyword.trim()).filter(keyword => keyword);
+        }
+        
+        return {
+          _id: sub._id,
+          name: sub.name,
+          description: sub.description,
+          totalCompanies: sub.totalCompanies.replace(/,/g, ''), // Remove commas before sending
+          metaTitle: sub.metaTitle,
+          metaKeywords: metaKeywordsArray
+        };
+      });
 
       const updateResults = await Promise.all(
         updateSubcategories.map(sub => 
           editSubcategory(sub._id, {
             name: sub.name,
             description: sub.description,
-            totalCompanies: sub.totalCompanies
+            totalCompanies: sub.totalCompanies,
+            metaTitle: sub.metaTitle,
+            metaKeywords: sub.metaKeywords
           })
         )
       );
@@ -336,6 +361,9 @@ const SubcategoryManagement = () => {
                         rows="3"
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent resize-none"
                       />
+                      <p className="text-xs text-gray-500 mt-1">
+                        Used for both the subcategory description and SEO meta description
+                      </p>
                     </div>
 
                     <div>
@@ -352,6 +380,40 @@ const SubcategoryManagement = () => {
                       />
                       <p className="text-xs text-gray-500 mt-1">
                         You can use commas to format numbers (e.g., 1,234,567)
+                      </p>
+                    </div>
+
+                    {/* Meta Title Field */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Meta Title
+                      </label>
+                      <input
+                        type="text"
+                        value={item.metaTitle}
+                        onChange={(e) => handleNewSubcategoryChange(index, "metaTitle", e.target.value)}
+                        placeholder="Enter meta title for SEO"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">
+                        Used for SEO - keep it under 60 characters for best results
+                      </p>
+                    </div>
+
+                    {/* Meta Keywords Field */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Meta Keywords
+                      </label>
+                      <input
+                        type="text"
+                        value={item.metaKeywords}
+                        onChange={(e) => handleNewSubcategoryChange(index, "metaKeywords", e.target.value)}
+                        placeholder="Enter keywords separated by commas"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">
+                        Enter keywords separated by commas (e.g., cybersecurity, managed services, IT security)
                       </p>
                     </div>
                   </div>
@@ -431,6 +493,9 @@ const SubcategoryManagement = () => {
                           rows="3"
                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent resize-none"
                         />
+                        <p className="text-xs text-gray-500 mt-1">
+                          Used for both the subcategory description and SEO meta description
+                        </p>
                       </div>
 
                       <div>
@@ -447,6 +512,40 @@ const SubcategoryManagement = () => {
                         />
                         <p className="text-xs text-gray-500 mt-1">
                           You can use commas to format numbers (e.g., 1,234,567)
+                        </p>
+                      </div>
+
+                      {/* Meta Title Field */}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Meta Title
+                        </label>
+                        <input
+                          type="text"
+                          value={item.metaTitle}
+                          onChange={(e) => handleExistingSubcategoryChange(index, "metaTitle", e.target.value)}
+                          placeholder="Enter meta title for SEO"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
+                        />
+                        <p className="text-xs text-gray-500 mt-1">
+                          Used for SEO - keep it under 60 characters for best results
+                        </p>
+                      </div>
+
+                      {/* Meta Keywords Field */}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Meta Keywords
+                        </label>
+                        <input
+                          type="text"
+                          value={item.metaKeywords}
+                          onChange={(e) => handleExistingSubcategoryChange(index, "metaKeywords", e.target.value)}
+                          placeholder="Enter keywords separated by commas"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a365d] focus:border-transparent"
+                        />
+                        <p className="text-xs text-gray-500 mt-1">
+                          Enter keywords separated by commas (e.g., cybersecurity, managed services, IT security)
                         </p>
                       </div>
                     </div>

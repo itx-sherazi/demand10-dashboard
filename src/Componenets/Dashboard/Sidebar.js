@@ -147,6 +147,14 @@ export default function Sidebar({
           sidebarOpen={sidebarOpen}
         />
         
+        {/* Subcategory FAQs Tab */}
+        <SidebarButton
+          icon={<FaFileInvoice size={20} />}
+          label="Subcategory FAQs"
+          isActive={activeTab === "SubcategoryFAQs"}
+          onClick={() => setActiveTab("SubcategoryFAQs")}
+          sidebarOpen={sidebarOpen}
+        />
         
         <SidebarButton
           icon={<FaBuilding size={20} />}

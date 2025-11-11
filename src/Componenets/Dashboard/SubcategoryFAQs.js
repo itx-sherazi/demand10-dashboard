@@ -1,28 +1,13 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
 import { subcategoriesDashboard, editSubcategory } from '@/services/api';
 
-// Dynamically import react-quill-new to avoid SSR issues
-const ReactQuill = dynamic(() => import('react-quill-new'), { 
-  ssr: false,
-  loading: () => (
-    <div className="h-64 border border-gray-300 rounded-md flex items-center justify-center bg-gray-50">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600 mx-auto mb-2"></div>
-        <p className="text-gray-600">Loading editor...</p>
-      </div>
-    </div>
-  )
-});
-import 'react-quill-new/dist/quill.snow.css';
-
-const SubcategoryContent = () => {
+const SubcategoryFAQs = () => {
   const [subcategories, setSubcategories] = useState([]);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
-  const [content, setContent] = useState('');
+  const [faqs, setFaqs] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [loadingContent, setLoadingContent] = useState(false);
+  const [loadingFAQs, setLoadingFAQs] = useState(false);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
   const [mounted, setMounted] = useState(false);
@@ -52,12 +37,12 @@ const SubcategoryContent = () => {
     
     if (!subcategoryId) {
       setSelectedSubcategory(null);
-      setContent('');
+      setFaqs([]);
       return;
     }
 
     // Show loading state
-    setLoadingContent(true);
+    setLoadingFAQs(true);
     setMessage('');
 
     // Small delay to show loading indicator
@@ -65,13 +50,29 @@ const SubcategoryContent = () => {
 
     const subcategory = subcategories.find(s => s._id === subcategoryId);
     setSelectedSubcategory(subcategory);
-    // Make sure to load existing content properly
-    setContent(subcategory.content || '');
+    // Make sure to load existing FAQs properly
+    setFaqs(Array.isArray(subcategory.faqs) ? subcategory.faqs : []);
     
-    setLoadingContent(false);
+    setLoadingFAQs(false);
   };
 
-  const handleSaveContent = async () => {
+  const handleAddFAQ = () => {
+    setFaqs([...faqs, { question: '', answer: '' }]);
+  };
+
+  const handleRemoveFAQ = (index) => {
+    const newFAQs = [...faqs];
+    newFAQs.splice(index, 1);
+    setFaqs(newFAQs);
+  };
+
+  const handleFAQChange = (index, field, value) => {
+    const newFAQs = [...faqs];
+    newFAQs[index][field] = value;
+    setFaqs(newFAQs);
+  };
+
+  const handleSaveFAQs = async () => {
     if (!selectedSubcategory) {
       setMessage('Please select a subcategory first');
       return;
@@ -81,74 +82,42 @@ const SubcategoryContent = () => {
     setMessage('');
     
     try {
-      // Check if content is empty or just whitespace/empty tags
-      let cleanContent = content || '';
-      
-      // Remove whitespace and check if it's just empty HTML tags
-      const trimmedContent = cleanContent.trim();
-      if (trimmedContent === '' || trimmedContent === '<p><br></p>' || trimmedContent === '<p></p>') {
-        cleanContent = '';
-      }
+      // Filter out empty FAQs
+      const validFAQs = faqs.filter(faq => faq.question.trim() !== '' && faq.answer.trim() !== '');
       
       const payload = {
-        content: cleanContent
+        faqs: validFAQs
       };
 
       const response = await editSubcategory(selectedSubcategory._id, payload);
       
       if (response.status === 200) {
-        setMessage('Content saved successfully! Note: It may take up to 10 minutes for changes to appear on the website due to caching.');
+        setMessage('FAQs saved successfully! Note: It may take up to 10 minutes for changes to appear on the website due to caching.');
         // Update the subcategory in the list
         setSubcategories(subcategories.map(s => 
           s._id === selectedSubcategory._id 
-            ? { ...s, content: cleanContent } 
+            ? { ...s, faqs: validFAQs } 
             : s
         ));
         
         // Auto-hide success message after 5 seconds
         setTimeout(() => setMessage(''), 5000);
       } else {
-        setMessage('Error saving content: ' + (response.data.message || 'Unknown error'));
+        setMessage('Error saving FAQs: ' + (response.data.message || 'Unknown error'));
       }
     } catch (error) {
-      console.error('Error saving content:', error);
-      setMessage('Error saving content: ' + error.message);
+      console.error('Error saving FAQs:', error);
+      setMessage('Error saving FAQs: ' + error.message);
     } finally {
       setSaving(false);
     }
   };
 
-  const modules = {
-    toolbar: [
-      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      [{ 'script': 'sub'}, { 'script': 'super' }],
-      [{ 'indent': '-1'}, { 'indent': '+1' }],
-      [{ 'direction': 'rtl' }],
-      [{ 'color': [] }, { 'background': [] }],
-      [{ 'align': [] }],
-      ['link', 'image', 'video'],
-      ['clean']
-    ],
-  };
-
-  const formats = [
-    'header',
-    'bold', 'italic', 'underline', 'strike',
-    'list', 'bullet',
-    'script', 'super', 'sub',
-    'indent', 'direction',
-    'color', 'background',
-    'align',
-    'link', 'image', 'video'
-  ];
-
   // Show initial loading state
   if (!mounted) {
     return (
       <div className="bg-white rounded-xl shadow-md p-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6">Subcategory Content Management</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">Subcategory FAQ Management</h2>
         <div className="flex justify-center items-center py-12">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600 mx-auto mb-4"></div>
@@ -161,7 +130,7 @@ const SubcategoryContent = () => {
 
   return (
     <div className="bg-white rounded-xl shadow-md p-6">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Subcategory Content Management</h2>
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">Subcategory FAQ Management</h2>
       
       {message && (
         <div className={`mb-4 p-3 rounded-lg transition-all ${
@@ -181,7 +150,7 @@ const SubcategoryContent = () => {
           onChange={handleSubcategoryChange}
           value={selectedSubcategory?._id || ''}
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
-          disabled={loading || loadingContent}
+          disabled={loading || loadingFAQs}
         >
           <option value="">-- Select a Subcategory --</option>
           {subcategories.map((subcategory) => (
@@ -192,37 +161,83 @@ const SubcategoryContent = () => {
         </select>
       </div>
 
-      {loadingContent && (
+      {loadingFAQs && (
         <div className="flex justify-center items-center py-12 mb-6">
           <div className="text-center">
             <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-teal-600 mx-auto mb-3"></div>
-            <p className="text-gray-600">Loading content...</p>
+            <p className="text-gray-600">Loading FAQs...</p>
           </div>
         </div>
       )}
 
-      {selectedSubcategory && !loadingContent && (
+      {selectedSubcategory && !loadingFAQs && (
         <>
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Content for: <span className="text-teal-600 font-semibold">{selectedSubcategory.name}</span>
-              <span className="text-sm text-gray-500 ml-2">({content?.length || 0} characters)</span>
-            </label>
-            <div className="border border-gray-300 rounded-md">
-              <ReactQuill
-                value={content}
-                onChange={setContent}
-                modules={modules}
-                formats={formats}
-                theme="snow"
-                className="h-64"
-              />
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-medium text-gray-800">
+                FAQs for: <span className="text-teal-600 font-semibold">{selectedSubcategory.name}</span>
+                <span className="text-sm text-gray-500 ml-2">({faqs.length} FAQ{faqs.length !== 1 ? 's' : ''} loaded)</span>
+              </h3>
+              <button
+                onClick={handleAddFAQ}
+                className="px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+              >
+                Add FAQ
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              {faqs.length === 0 ? (
+                <div className="text-center py-8 bg-gray-50 rounded-lg border border-gray-200">
+                  <p className="text-gray-500">No FAQs added yet. Click &quot;Add FAQ&quot; to get started.</p>
+                </div>
+              ) : (
+                faqs.map((faq, index) => (
+                  <div key={index} className="border border-gray-200 rounded-lg p-4 bg-gray-50">
+                    <div className="flex justify-between items-start mb-3">
+                      <h4 className="font-medium text-gray-700">FAQ #{index + 1}</h4>
+                      <button
+                        onClick={() => handleRemoveFAQ(index)}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                    <div className="space-y-3">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Question
+                        </label>
+                        <input
+                          type="text"
+                          value={faq.question}
+                          onChange={(e) => handleFAQChange(index, 'question', e.target.value)}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
+                          placeholder="Enter question"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Answer
+                        </label>
+                        <textarea
+                          value={faq.answer}
+                          onChange={(e) => handleFAQChange(index, 'answer', e.target.value)}
+                          rows={3}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
+                          placeholder="Enter answer"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
 
-          <div className="flex justify-end pt-8">
+          <div className="flex justify-end pt-4">
             <button
-              onClick={handleSaveContent}
+              onClick={handleSaveFAQs}
               disabled={saving}
               className={`px-6 py-2 rounded-md text-white font-medium transition-colors ${
                 saving 
@@ -238,7 +253,7 @@ const SubcategoryContent = () => {
                   </svg>
                   Saving...
                 </span>
-              ) : 'Save Content'}
+              ) : 'Save FAQs'}
             </button>
           </div>
         </>
@@ -253,4 +268,4 @@ const SubcategoryContent = () => {
   );
 };
 
-export default SubcategoryContent;
+export default SubcategoryFAQs;
