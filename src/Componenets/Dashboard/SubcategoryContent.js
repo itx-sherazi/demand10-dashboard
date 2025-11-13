@@ -1,21 +1,10 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import { subcategoriesDashboard, editSubcategory } from '@/services/api';
 
-// Dynamically import react-quill-new to avoid SSR issues
-const ReactQuill = dynamic(() => import('react-quill-new'), { 
-  ssr: false,
-  loading: () => (
-    <div className="h-64 border border-gray-300 rounded-md flex items-center justify-center bg-gray-50">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600 mx-auto mb-2"></div>
-        <p className="text-gray-600">Loading editor...</p>
-      </div>
-    </div>
-  )
-});
-import 'react-quill-new/dist/quill.snow.css';
+// Dynamically import jodit-react to avoid SSR issues
+const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 
 const SubcategoryContent = () => {
   const [subcategories, setSubcategories] = useState([]);
@@ -26,6 +15,7 @@ const SubcategoryContent = () => {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
   const [mounted, setMounted] = useState(false);
+  const editor = useRef(null);
 
   useEffect(() => {
     setMounted(true);
@@ -118,31 +108,7 @@ const SubcategoryContent = () => {
     }
   };
 
-  const modules = {
-    toolbar: [
-      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      [{ 'script': 'sub'}, { 'script': 'super' }],
-      [{ 'indent': '-1'}, { 'indent': '+1' }],
-      [{ 'direction': 'rtl' }],
-      [{ 'color': [] }, { 'background': [] }],
-      [{ 'align': [] }],
-      ['link', 'image', 'video'],
-      ['clean']
-    ],
-  };
 
-  const formats = [
-    'header',
-    'bold', 'italic', 'underline', 'strike',
-    'list', 'bullet',
-    'script', 'super', 'sub',
-    'indent', 'direction',
-    'color', 'background',
-    'align',
-    'link', 'image', 'video'
-  ];
 
   // Show initial loading state
   if (!mounted) {
@@ -208,14 +174,11 @@ const SubcategoryContent = () => {
               Content for: <span className="text-teal-600 font-semibold">{selectedSubcategory.name}</span>
               <span className="text-sm text-gray-500 ml-2">({content?.length || 0} characters)</span>
             </label>
-            <div className="border border-gray-300 rounded-md">
-              <ReactQuill
+            <div className="border-2 border-gray-300 rounded-lg focus-within:ring-2 focus-within:ring-[#1e477f] focus-within:border-[#1e477f] transition-all duration-200">
+              <JoditEditor
+                ref={editor}
                 value={content}
-                onChange={setContent}
-                modules={modules}
-                formats={formats}
-                theme="snow"
-                className="h-64"
+                onChange={(newContent) => setContent(newContent)}
               />
             </div>
           </div>
