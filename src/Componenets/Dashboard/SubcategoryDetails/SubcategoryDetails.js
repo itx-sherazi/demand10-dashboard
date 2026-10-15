@@ -12,7 +12,6 @@ const SubcategoryDetails = () => {
   const [subcategoryDetails, setSubcategoryDetails] = useState(null);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [allSubcategoryCompanies, setAllSubcategoryCompanies] = useState([]);
 
   // Debug log when subcategoryDetails changes
   useEffect(() => {
@@ -148,15 +147,11 @@ const SubcategoryDetails = () => {
    
       if (subcategory && subcategory.slug) {
         fetchSubcategoryDetails(subcategory.slug);
-        // Fetch all companies in this subcategory
-        fetchCompaniesInSubcategory(subcategory.slug);
       } else {
         setSubcategoryDetails(null);
-        setAllSubcategoryCompanies([]);
       }
     } else {
       setSubcategoryDetails(null);
-      setAllSubcategoryCompanies([]);
     }
   }, [selectedSubcategory]);
 
@@ -177,23 +172,6 @@ const SubcategoryDetails = () => {
         [field]: value
       }
     }));
-  };
-
-  // Fetch all companies in subcategory
-  const fetchCompaniesInSubcategory = async (subcategorySlug) => {
-    try {
-      // Assuming there's an API endpoint to get all companies in a subcategory
-      // You might need to implement this endpoint
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/subcategories/companies/${subcategorySlug}?limit=1000`);
-      const data = await response.json();
-      
-      if (data.companies) {
-        setAllSubcategoryCompanies(data.companies);
-      }
-    } catch (error) {
-      console.error("Error fetching companies:", error);
-      toast.error("Failed to load companies");
-    }
   };
 
   // Handle changes to array fields

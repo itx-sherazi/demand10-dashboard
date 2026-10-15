@@ -1,12 +1,12 @@
 module.exports = {
   apps: [
     {
-      name: "intentfrontend",
-      cwd: "/var/www/itx_api/intent/intentfrontend",
-      script: "node_modules/next/dist/bin/next",
+      name: "demand10-dashboard",
+      script: "npm",
       args: "start",
       env: {
         NODE_ENV: "production",
+        PORT: 3008
       }
     }
   ]

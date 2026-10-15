@@ -664,7 +664,7 @@ export const  fetchCompaniesSearch = async (searchParams) => {
     params.append("subcategory_slug", searchParams.subcategory_slug);
   }
 
-  const res = await fetch(`${API_BASE_URL}/search-companies?${params.toString()}`, {
+  const res = await fetch(`${API_BASE_URL}/companies/search?${params.toString()}`, {
     cache: "no-store",
     credentials: "include"
   });
@@ -904,7 +904,7 @@ export const approveReview = async (reviewId) => {
     if (error.response && error.response.status === 401) {
       // Token is invalid or expired, redirect to login
       localStorage.removeItem('adminToken');
-      window.location.href = '/login';
+      window.location.href = '/';
       throw new Error('Session expired. Please login again.');
     }
     console.error('Error approving review:', error);
@@ -934,7 +934,7 @@ export const rejectReview = async (reviewId) => {
     if (error.response && error.response.status === 401) {
       // Token is invalid or expired, redirect to login
       localStorage.removeItem('adminToken');
-      window.location.href = '/login';
+      window.location.href = '/';
       throw new Error('Session expired. Please login again.');
     }
     console.error('Error rejecting review:', error);
@@ -963,7 +963,7 @@ export const deleteReview = async (reviewId) => {
     if (error.response && error.response.status === 401) {
       // Token is invalid or expired, redirect to login
       localStorage.removeItem('adminToken');
-      window.location.href = '/login';
+      window.location.href = '/';
       throw new Error('Session expired. Please login again.');
     }
     console.error('Error deleting review:', error);
@@ -989,7 +989,7 @@ export const fetchAllReviews = async () => {
     if (error.response && error.response.status === 401) {
       // Token is invalid or expired, redirect to login
       localStorage.removeItem('adminToken');
-      window.location.href = '/login';
+      window.location.href = '/';
       throw new Error('Session expired. Please login again.');
     }
     console.error('Error fetching reviews:', error);
